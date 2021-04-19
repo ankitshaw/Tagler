@@ -1,5 +1,4 @@
 from pygtail import Pygtail
-import os.path
 from os import path
 
 class FilePoller:
