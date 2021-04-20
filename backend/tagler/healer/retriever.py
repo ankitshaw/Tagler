@@ -6,9 +6,9 @@ class KnowledgeBaseRetriever:
     def __init__(self, scheme:str="http", host:str="localhost", port:int=9200, username:str="", password:str="", index:str="document", search_field:str="text", retriever_type="sparse"):
         self.document_store = ElasticsearchDocumentStore(scheme=scheme, host=host, port=port, username=username, password=password, index=index, search_fields=search_field)
         if retriever_type=="sparse":
-            self.retriever = ElasticsearchRetriever(document_store=document_store)
+            self.retriever = ElasticsearchRetriever(document_store=self.document_store)
         elif retriever_type=="dense":
-            self.retriever = DensePassageRetriever(document_store=document_store, 
+            self.retriever = DensePassageRetriever(document_store=self.document_store, 
                                       query_embedding_model="facebook/dpr-question_encoder-single-nq-base", # shift these to yaml? download the models
                                       passage_embedding_model="facebook/dpr-ctx_encoder-single-nq-base",
                                       max_seq_len_query=64,
