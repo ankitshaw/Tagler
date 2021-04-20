@@ -19,6 +19,6 @@ class KnowledgeBaseRetriever:
                                       use_fast_tokenizers=True
                                       )
 
-    def find_heal_action(self, exception:str, filter:dict=None):
+    def get_heal_action(self, exception:str, filter:dict=None):
         doc  = self.retriever.retrieve(exception,top_k=2, filters=filter)
         return doc["heal_action"]
