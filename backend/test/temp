@@ -1,0 +1,25 @@
+#below methods to be moved
+    def preprocessor(self):
+        processor = PreProcessor(clean_empty_lines=True,
+                    clean_whitespace=True,
+                    clean_header_footer=True,
+                    split_by="word",
+                    split_length=200,
+                    split_respect_sentence_boundary=True)
+        
+
+    def clean(self, document: str) -> str:
+        text = document
+        lines = text.splitlines()
+        cleaned_lines = []
+        for line in lines:
+            line = line.strip()
+            cleaned_lines.append(line)
+        text = "\n".join(cleaned_lines)
+        text = re.sub(r"\n\n+", "\n\n", text)
+
+        return text
+
+    def extract_details(self, doc:str):
+        #Queue	Process	Predicted Exception Tag	Self-Heal (Dummy)	TimeStamp
+        return {}
