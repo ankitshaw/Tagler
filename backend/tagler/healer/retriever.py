@@ -7,7 +7,7 @@ class KnowledgeBaseRetriever:
         self.document_store = ElasticsearchDocumentStore(scheme=scheme, host=host, port=port, username=username, password=password, index=index, search_fields=search_field)
         if retriever_type=="sparse":
             self.retriever = ElasticsearchRetriever(document_store=self.document_store)
-        elif retriever_type=="dense":
+        elif retriever_type=="dense": #Experimental 
             self.retriever = DensePassageRetriever(document_store=self.document_store, 
                                       query_embedding_model="facebook/dpr-question_encoder-single-nq-base", # shift these to yaml? download the models
                                       passage_embedding_model="facebook/dpr-ctx_encoder-single-nq-base",
