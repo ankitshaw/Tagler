@@ -1,9 +1,15 @@
-from backend.train.nlp_trainer import NLPTagTrainer
+from tagler.poller.file import FilePoller
 
+
+EXCEPT_MAPPING = { '0' : 'SYSTEM EXCEPTION', '1' : 'BUSINESS EXCEPTION' }
 
 class NLPTagClassifier():
 
-    def load_model():
+    def __init__( self, modelPath =  'saved_weights.pt' ):
+        self.modelPath = modelPath
+        self.classifier  = self.load_model()
+
+    def load_model( self ):
         """
             Loading already trained model for Tag Classification
 
@@ -12,7 +18,6 @@ class NLPTagClassifier():
             classifier model for tagging
         """
 
-
         # import BERT-base pretrained model
         bert = AutoModel.from_pretrained('bert-base-uncased')
 
@@ -20,8 +25,7 @@ class NLPTagClassifier():
         model = BERT_Arch( bert )
 
         #load weights of best model
-        path = 'saved_weights.pt'
-        model.load_state_dict( torch.load( path ) )
+        model.load_state_dict( torch.load( self.modelPath ) )
 
         return model
 
@@ -41,37 +45,17 @@ class NLPTagClassifier():
         """
 
         with torch.no_grad():
-            classifier  = load_model()
-            data        = NLPTagTrainer.pipeline(text)
-            output      = classifier(data[0].to(device), data[1].to(device))
+            
+            data        = NLPTagTrainer.pipeline( exception )
+            output      = self.classifier( data[0].to(device), data[1].to(device) )
             output      = output.detach().cpu().numpy()
 
-        exception_type = np.argmax(output,axis=1)
+        exception_type = np.argmax( output, axis = 1 )
 
         return exception_type
 
-    def publish_result( self, result ):
-        pass
 
 
-    def perform_healing( self, steps ):
-        pass
 
-
-    def query_resolution( self, exception, exception_type ):
-        pass
-
-
-    def execute():
-        """
-        Classifies type of exception and performs the resolution steps
-
-        Returns:
-        --------
-            bool - True is successful classification else false
-        """
-        exception_type = classify_exception( exception )
-        publish_result( exception_type )
-        steps = query_resolution( exception, exception_type )
-        perform_healing( steps )
-        pass
+if __name__ == '__main__':
+    execute('exception')
