@@ -1,13 +1,12 @@
-from tagler.poller.file import FilePoller
-
-
-EXCEPT_MAPPING = { '0' : 'SYSTEM EXCEPTION', '1' : 'BUSINESS EXCEPTION' }
+from typing import List
+from trainer import BERT_Arch
 
 class NLPTagClassifier():
-
-    def __init__( self, modelPath =  'saved_weights.pt' ):
+    #EXCEPT_MAPPING = { '0' : 'SYSTEM EXCEPTION', '1' : 'BUSINESS EXCEPTION' }
+    def __init__( self, modelPath:str='saved_weights.pt', tags:List=None):
         self.modelPath = modelPath
         self.classifier  = self.load_model()
+        self.tags = tags
 
     def load_model( self ):
         """
