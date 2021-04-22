@@ -1,3 +1,7 @@
+from tagler.poller.sql import SqlPoller
+from tagler.tagger.inference import NLPTagClassifier
+
+x = NLPTagClassifier("/workspaces/Tagler-Hackathon/models")
 
 #
 # def publish_result( self, exception, result ):

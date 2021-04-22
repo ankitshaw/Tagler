@@ -1,12 +1,19 @@
 from typing import List
-from trainer import BERT_Arch
+from tagler.trainer.bert import BERT_Arch
+from transformers import AutoModel, BertTokenizerFast
+import torch
+import numpy as np
 
+EXCEPT_MAPPING = { 0 : 'SYSTEM EXCEPTION', 1 : 'BUSINESS EXCEPTION' }
 class NLPTagClassifier():
-    #EXCEPT_MAPPING = { '0' : 'SYSTEM EXCEPTION', '1' : 'BUSINESS EXCEPTION' }
-    def __init__( self, modelPath:str='saved_weights.pt', tags:List=None):
-        self.modelPath = modelPath
-        self.classifier  = self.load_model()
-        self.tags = tags
+
+    def __init__( self, modelDir:str=None, device:str="cpu"):
+        self.device = device if device else torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.max_seq_len = 25
+        self.modelDir = modelDir if modelDir else 'bert-base-uncased'
+        self.classifier, self.tokenizer  = self.load_model()
+        #self.tags = tags  #pass this also later
+        
 
     def load_model( self ):
         """
@@ -17,19 +24,22 @@ class NLPTagClassifier():
             classifier model for tagging
         """
 
+        tokenizer = BertTokenizerFast.from_pretrained(self.modelDir)
+
         # import BERT-base pretrained model
-        bert = AutoModel.from_pretrained('bert-base-uncased')
+        bert = AutoModel.from_pretrained(self.modelDir)
 
         # pass the pre-trained BERT to our define architecture
         model = BERT_Arch( bert )
+        model.to(self.device)
 
         #load weights of best model
-        model.load_state_dict( torch.load( self.modelPath ) )
+        model.load_state_dict( torch.load( self.modelDir+"/saved_weights.pt", map_location=self.device) )
 
-        return model
+        return model, tokenizer
 
 
-    def classify_exception( self, exception ):
+    def classify_exception( self, exception ) -> str:
         """
             Classifies excpetion type based on the input text using the NLP trained model.
 
@@ -45,16 +55,22 @@ class NLPTagClassifier():
 
         with torch.no_grad():
             
-            data        = NLPTagTrainer.pipeline( exception )
-            output      = self.classifier( data[0].to(device), data[1].to(device) )
+            data        = self.pipeline( exception )
+            output      = self.classifier( data[0].to(self.device), data[1].to(self.device) )
             output      = output.detach().cpu().numpy()
 
         exception_type = np.argmax( output, axis = 1 )
 
-        return exception_type
-
-
-
-
-if __name__ == '__main__':
-    execute('exception')
+        return EXCEPT_MAPPING[exception_type[0]] #will have to return before argmax as raw output to check the degree of confidence else dont tag
+    
+    def pipeline(self, text):
+        token = self.tokenizer.batch_encode_plus(
+                [text],
+                max_length = self.max_seq_len,
+                pad_to_max_length=True,
+                truncation=True,
+                return_token_type_ids=False
+                )
+        new_seq = torch.tensor(token['input_ids'])
+        new_mask = torch.tensor(token['attention_mask'])
+        return [new_seq, new_mask]

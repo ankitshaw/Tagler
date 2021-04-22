@@ -1,11 +1,12 @@
-import sys
-sys.path.insert(1, '/workspaces/Tagler-Hackathon/backend')
+#import sys
+#sys.path.insert(1, '/workspaces/Tagler-Hackathon/backend')
+import logging as LOGGER
+import time
 
 from tagler.poller.file import FilePoller
 from tagler.poller.sql import SqlPoller
 from tagler.publisher.sql import SqlPublisher
-import time
-import logging as LOGGER
+
 LOGGER.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=LOGGER.DEBUG)
 
 #x = FilePoller("/workspaces/Tagler-Hackathon/backend/test/test_log.txt")
