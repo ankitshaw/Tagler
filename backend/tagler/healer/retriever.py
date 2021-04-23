@@ -20,5 +20,10 @@ class KnowledgeBaseRetriever:
                                       )
 
     def get_heal_action(self, exception:str, filter:dict=None):
-        doc  = self.retriever.retrieve(exception,top_k=2, filters=filter)
-        return doc["heal_action"]
+        doc  = self.retriever.retrieve(exception,top_k=1, filters=filter) #to check if first element is the best match or is it random seq
+        return doc[0]["heal_action"]
+    
+    def get_exception(self, exception:str, filter:dict=None):
+        doc  = self.retriever.retrieve(exception,top_k=1, filters=filter)
+        if len(doc) != 0:
+            return doc[0]["exception_tag"], doc[0]["heal_action"]
