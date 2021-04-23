@@ -12,7 +12,7 @@ LOGGER.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(leveln
 nlpTagger = NLPTagClassifier("/workspaces/Tagler-Hackathon/models")
 esRetriever = KnowledgeBaseRetriever()
 sqlPol = SqlPoller(conn_string="sqlite:///tagler.db",)
-sqlPub = SqlPublisher(s.conn)
+sqlPub = SqlPublisher(sqlPol.conn)
 sqlPol.set_query_details("logs",2,"exception_input","exception_tag")
 sqlPub.set_query_details("logs","id","exception_tag")
 serviceNow = ServiceNow()
