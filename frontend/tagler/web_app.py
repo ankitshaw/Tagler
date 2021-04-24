@@ -1,0 +1,26 @@
+"""Main module for the streamlit app"""
+import streamlit as st
+import pages.welcome
+import pages.tagger
+import pages.insert
+import pages.feedback
+
+PAGES = {
+    "Welcome": pages.welcome,
+    "Tagger Exception": pages.tagger,
+    "Insert to DB": pages.insert,
+    "Feedback": pages.feedback,
+}
+
+
+def main():
+    """Main function of the App"""
+    st.sidebar.title("Navigation")
+    selection = st.sidebar.radio("Go to", list(PAGES.keys()))
+
+    page = PAGES[selection]
+
+    page.write()
+
+if __name__ == "__main__":
+    main()
