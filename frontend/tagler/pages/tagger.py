@@ -2,6 +2,7 @@ import requests
 import streamlit as st
 import os
 from utils import poll_tag, load_css
+import pandas as pd
 
 
 def write():
@@ -14,4 +15,4 @@ def write():
 			df = poll_tag(run_query)
 
 		st.write("## Tagged Exceptions:")
-		st.write(df)
+		st.write(pd.DataFrame(df))

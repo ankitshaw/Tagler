@@ -5,7 +5,7 @@ import os
 API_ENDPOINT = os.getenv("API_ENDPOINT", "https://haystack-demo-api.deepset.ai")
 MODEL_ID = "1"
 DOC_REQUEST = "query"
-TAGGER = "tagger"
+TAGGER = "classify-exception"
 INSERT = "insert"
 
 
@@ -15,14 +15,15 @@ def insert_db(query):
    response_raw = requests.post(url, json={"query":query})
    return response_raw
 
-@st.cache(show_spinner=False)
+#@st.cache(show_spinner=False) //Check 
 def poll_tag(file):
    url = API_ENDPOINT + "/" + TAGGER
-   response_raw = requests.post(url)
-   return json2Df(resp)
+   resp = requests.get(url)
+   print(resp)
+   return json2Df(resp.json())
 
 def json2Df(resp):
-  pass
+  return resp
 
 
 
