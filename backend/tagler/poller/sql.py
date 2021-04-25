@@ -44,8 +44,8 @@ class SqlPoller:
 
 
 """
-insert into logs values(101,"Invite not found in both CBS mailbox","Queue-12","Process-9","Business Exception","Raised Ticket","1/2/2021 11:45")
-CREATE TABLE logs (
+insert into logs values(101,"Invite not found in both CBS mailbox","Queue-12","Process-9","","","1/2/2021 11:45")
+CREATE TABLE train (
 	id INTEGER PRIMARY KEY,
 	exception_input TEXT NOT NULL,
 	process TEXT NOT NULL,

@@ -6,6 +6,7 @@ from tagler.tagger.inference import NLPTagClassifier
 from tagler.healer.actions import Email, ServiceNow
 from tagler.trainer.nlp_trainer import NLPTagTrainer
 from app import predict_exception_tag
+from pydantic import BaseModel
 import logging as LOGGER
 import time
 
@@ -17,7 +18,7 @@ class TagException(BaseModel):
 
 
 app = FastAPI()
-sqlPub = SqlPublisher()
+#sqlPub = SqlPublisher()
 
 
 @app.get("/")
@@ -27,34 +28,34 @@ def home():
 
 @app.get('/classify-exception')
 async def classify_expection():
+    raw_data = predict_exception_tag()
+    # try:
+    #     raw_data = predict_exception_tag()
+    #     # Get all tagged exception from db
+    # except:
+    #     return {'status' : 400}
 
-    try:
-        predict_exception_tag()
-        # Get all tagged exception from db
-    except:
-        return jsonify( 'status' : 400 )
-
-    return jsonify(  ) #return tagged exception to UI
-
-
-@app.get('/train-model')
-async def train_model():
-    # Need to think on how to handle the new training data scenario
-    try:
-        trainer = NLPTagTrainer()
-        trainer.train()
-    except:
-        return jsonify( 'status' : 400 )
-
-    return jsonify( 'status' : 200 )
+    return raw_data #return tagged exception to UI
 
 
-@app.post('/tag-exception')
-async def tag_exception( tagException : TagException ):
-    try:
-        # Write the tagged exception in table so that it can used for retraining purpose
-        sqlPub.prepare_update( tagException.id, tagException.tag )
-    except:
-        return jsonify( 'status', 400 )
+# @app.get('/train-model')
+# async def train_model():
+#     # Need to think on how to handle the new training data scenario
+#     try:
+#         trainer = NLPTagTrainer()
+#         trainer.train()
+#     except:
+#         return jsonify({'status' : 400})
 
-    return jsonify( 'status' : 200 )
+#     return jsonify({'status' : 200} )
+
+
+# @app.post('/tag-exception')
+# async def tag_exception( tagException : TagException ):
+#     try:
+#         # Write the tagged exception in table so that it can used for retraining purpose
+#         sqlPub.prepare_update( tagException.id, tagException.tag )
+#     except:
+#         return jsonify({'status', 400})
+
+#     return jsonify({'status' : 200})

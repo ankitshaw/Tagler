@@ -27,7 +27,7 @@ class BERT_Arch(nn.Module):
     def forward(self, sent_id, mask):
 
       #pass the inputs to the model
-      _, cls_hs = self.bert(sent_id, attention_mask=mask)
+      _, cls_hs = self.bert(sent_id, attention_mask=mask, return_dict=False)
 
       x = self.fc1(cls_hs)
 

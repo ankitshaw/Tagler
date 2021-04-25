@@ -4,7 +4,7 @@ from transformers import AutoModel, BertTokenizerFast
 import torch
 import numpy as np
 
-EXCEPT_MAPPING = { 0 : 'SYSTEM EXCEPTION', 1 : 'BUSINESS EXCEPTION' }
+EXCEPT_MAPPING = { 0 : 'Business Exception', 1 : 'System Exception' }
 class NLPTagClassifier():
 
     def __init__( self, modelDir:str=None, device:str="cpu"):
@@ -34,7 +34,8 @@ class NLPTagClassifier():
         model.to(self.device)
 
         #load weights of best model
-        model.load_state_dict( torch.load( self.modelDir+"/saved_weights.pt", map_location=self.device) )
+        tl = torch.load( self.modelDir+"/saved_weights.pt", map_location=self.device)
+        model.load_state_dict( tl )
 
         return model, tokenizer
 

@@ -1,0 +1,48 @@
+id,exception_input,queue,process,exception_tag,heal_action,entry_time
+101,Invite not found in both CBS mailbox,Queue-12,Process-9,Business Exception,Raised Ticket,1/2/21 11:45
+102,Interviewer xxxx mail ID not found in invite.,Queue-12,Process-9,Business Exception,Raised Ticket,1/2/21 11:55
+103,Invite not found in both TAX and PAS mailbox,Queue-12,Process-9,Business Exception,Raised Ticket,1/2/21 12:05
+104,"InternalFailed to evaluate expression 'Replace([MailBody],""$Item$"",[Mail_Data.ID]) - The collection has no c",Queue-14,Process-11,System Exception,Restarted Process,1/2/21 12:15
+105,Could not execute code stage because exception thrown by code stage: The given key was not present in the dictionary.,Queue-16,Process-13,System Exception,Restarted Process,1/2/21 12:25
+106,Email Id not found Failed to read Email,Queue-17,Process-8,Business Exception,Notified User,1/2/21 12:35
+107,Automatically set exception at CleanUp,Queue-1,Process-1,System Exception,Ignored,1/2/21 12:45
+108,Automatically set exception on session end,Queue-19,Process-15,System Exception,Ignored,1/2/21 12:55
+109,Recruiter xxxx mail ID not found in invite.,Queue-12,Process-9,Business Exception,Notified User,1/2/21 13:05
+110,Invite not found in Assurance Mailbox,Queue-12,Process-9,Business Exception,Notified User,1/2/21 13:15
+111,Exception occured while accessing article page. This article is unable to be processed.,Queue-22,Process-16,Business Exception,Restarted Process,1/2/21 13:25
+112,System Exception:Unable to Launch Service Now site after three retries,Queue-23,Process-17,System Exception,Raised Ticket,1/2/21 13:35
+113,Missing mandatory fields,Queue-17,Process-8,Business Exception,Raised Ticket,1/2/21 13:45
+114,Invite not found in Consulting Mailbox,Queue-12,Process-9,Business Exception,Raised Ticket,1/2/21 13:56
+115,Internal:No data found for new work queue items,Queue-4,Process-3,System Exception,Restarted Process,1/2/21 14:06
+116,Internal:Failed to evaluate expression '[Filtered output.P2] - The collection has no current row,Queue-23,Process-17,System Exception,Restarted Process,1/2/21 14:16
+117,On Page:Populated Filterd Data Into QueueFile Not Contain any valid APAC Country data:,Queue-37,Process-28,Business Exception,Notified User,1/2/21 14:26
+118,Mandatory field missing - PO not created by parent,Queue-9,Process-7,Business Exception,Ignored,1/2/21 14:36
+119,2036 - SA - NO Entries to be Processed,Queue-41,Process-31,Business Exception,Ignored,1/2/21 14:46
+120,Mandatory field missing - PO not created by parent To be proecssed manually,Queue-10,Process-7,Business Exception,Notified User,1/2/21 14:56
+121,Unexpected Error occured in adding requests in a request form to queue,Queue-45,Process-21,System Exception,Notified User,1/2/21 15:06
+122,Failed to perform step 1 in Read Stage 'Read product model' on page 'Purchase Order Line Items' - The object invoked has disconnected from its clients. (Exception from HRESULT: 0x80010108 (RPC_E_DISCONNECTED)),Queue-9,Process-7,System Exception,Restarted Process,1/2/21 15:16
+123,"Email does not contains the right Subject, subject does not start with **",Queue-52,Process-36,Business Exception,Raised Ticket,1/2/21 15:26
+124,BBC Update failed for BBC ID- 209- The remote server returned an error: (504) Gateway Timeout.,Queue-5,Process-2,System Exception,Raised Ticket,1/2/21 15:36
+125,BBC Update failed for BBC ID- 421- The remote server returned an error: (504) Gateway Timeout.,Queue-5,Process-2,System Exception,Raised Ticket,1/2/21 15:46
+126,2034 - TFD - NO Entries to be Processed,Queue-41,Process-31,Business Exception,Restarted Process,1/2/21 15:57
+127,"Failed to perform step 1 in Navigate Stage 'Invoke JS RAM Visible?' on page 'Place Order' - Failed while invoking javascript method:Exception from HRESULT: 0x80020101->   at mshtml.HTMLWindow2Class.IHTMLWindow2_execScript(String code, String language)  at BluePrism.ApplicationManager.HTML.clsHTMLDocument.InvokeJavascriptMethod(String methodname, String jsonargs, Object& retval, String& sErr) To be proecssed manually",Queue-10,Process-7,System Exception,Restarted Process,1/2/21 16:07
+128,"Email template not found, Bot failed to send the output file",Queue-58,Process-40,Business Exception,Notified User,1/2/21 16:17
+129,Failed to perform step 1 in Write Stage 'Write to EY House Bank' on page 'W- Coding Block' - Exception has been thrown by the target of an invocation.,Queue-30,Process-23,System Exception,Ignored,1/2/21 16:27
+130,"Failed to perform step 1 in Navigate Stage 'Navigate1' on page 'N-Search Req' - Failed while invoking javascript method:Exception from HRESULT: 0x80020101->   at mshtml.HTMLWindow2Class.IHTMLWindow2_execScript(String code, String language)  at BluePrism.ApplicationManager.HTML.clsHTMLDocument.InvokeJavascriptMethod(String methodname, String jsonargs, Object& retval, String& sErr) - Failed to update data to BBC",Queue-25,Process-19,System Exception,Ignored,1/2/21 16:37
+131,Unable to launch Taleo application,Queue-25,Process-19,System Exception,Notified User,1/2/21 16:47
+132,Error in Input File,Queue-31,Process-6,Business Exception,Notified User,1/2/21 16:57
+133,Internal:Failed to perform step 1 in Write Stage 'Clear short desc' on page 'W-ProblemTicket-Tabs' - Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)),Queue-23,Process-17,System Exception,Restarted Process,1/2/21 17:07
+134,Could not execute code stage because exception thrown by code stage: Call was rejected by callee. (Exception from HRESULT: 0x80010001 (RPC_E_CALL_REJECTED)),Queue-19,Process-15,System Exception,Raised Ticket,1/2/21 17:17
+135,Exception occured at ES_ITS_TDR_SCCM : Failed to perform step 1 in Navigate Stage 'Launch' on page 'Launch' - Application already launched,Queue-62,Process-43,System Exception,Raised Ticket,1/2/21 17:27
+136,The Main Collection does not contain 'NodeLevel',Queue-38,Process-29,Business Exception,Raised Ticket,1/2/21 17:37
+137,Could not execute code stage because exception thrown by code stage: Exception from HRESULT: 0x800A9C68,Queue-18,Process-14,System Exception,Restarted Process,1/2/21 17:47
+138,System Exception :Unable to Launch the RAM Site: Unable to update the Opportunity ID,Queue-29,Process-22,System Exception,Restarted Process,1/2/21 17:57
+139,Failed to fetch data from RACE tool due to site issue - Exception while finding new RACE form - Exception while finding new RACE form - RACE : Failure to find Textbox value,Queue-19,Process-15,System Exception,Notified User,1/2/21 18:08
+140,Failed to fetch data from RACE tool due to site issue - Exception while finding new RACE form - RACE : Failure to find Textbox value,Queue-19,Process-15,System Exception,Ignored,1/2/21 18:18
+141,Failed to fetch data from RACE tool due to site issue - Failed to perform step 1 in Navigate Stage 'Click Search and filter' on page 'Click-Home' - Error creating window handle.,Queue-19,Process-15,System Exception,Ignored,1/2/21 18:28
+142,Could not execute code stage because exception thrown by code stage: Out of memory.,Queue-52,Process-36,System Exception,Notified User,1/2/21 18:38
+143,Internal_Could not execute code stage because exception thrown by code stage: The control could not be found by id.,Queue-64,Process-1,System Exception,Notified User,1/2/21 18:48
+144,Failed to perform step 1 in Read Stage 'Read product model' on page 'Purchase Order Line Items' - No elements match the supplied query terms,Queue-9,Process-7,System Exception,Restarted Process,1/2/21 18:58
+145,BBC Update failed for BBC ID- 330- The remote server returned an error: (504) Gateway Timeout.,Queue-5,Process-2,System Exception,Restarted Process,1/2/21 19:08
+146,Failed to perform step 1 in Navigate Stage 'Click On the Number' on page 'Click On Task SLA' - Cannot find region identified as an image.,Queue-63,Process-44,System Exception,Raised Ticket,1/2/21 19:18
+147,Error in populating result in output template - Unexpected error occured in running output  macro,Queue-28,Process-21,System Exception,Restarted Process,1/2/21 19:28
