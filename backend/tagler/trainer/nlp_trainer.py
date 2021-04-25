@@ -200,7 +200,7 @@ class NLPTagTrainer():
 
 
     # function to train the model
-    def train_model():
+    def train():
 
       model.train()
 
