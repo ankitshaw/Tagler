@@ -19,12 +19,12 @@ class SqlPublisher:
     def clear_updates(self):
         self.update = []
 
-    def set_query_details(self, table:str, idColumn:str, statusColumn:str, healColumn:str):
+    def set_query_details(self, table:str, idColumn:str, tagColumn:str, healColumn:str):
         self.idColumn =idColumn
-        self.statusColumn = statusColumn
+        self.tagColumn = tagColumn
         self.table = table
         self.healColumn = healColumn
-        self.query = text("UPDATE " + self.table + " SET " + self.statusColumn + " = :tag ," + self.healColumn + " = :heal WHERE " + self.idColumn + "= :id")
+        self.query = text("UPDATE " + self.table + " SET " + self.tagColumn + " = :tag ," + self.healColumn + " = :heal WHERE " + self.idColumn + "= :id")
 
     def prepare_update(self, id:int, tag:str, heal:str):
         self.update.append({"tag":tag,"id":str(id), "heal":heal})

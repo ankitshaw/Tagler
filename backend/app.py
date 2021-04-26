@@ -19,8 +19,8 @@ nlpTagger = NLPTagClassifier("/workspaces/Tagler-Hackathon/models","cpu")
 esRetriever = KnowledgeBaseRetriever(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
 sqlPol = SqlPoller(conn_string="sqlite:////workspaces/Tagler-Hackathon/models/tagler_prd.db")
 sqlPub = SqlPublisher(sqlPol.conn)
-sqlPol.set_query_details("log_stream",2,"exception_input","exception_tag")
-sqlPub.set_query_details("logs","stream","exception_tag","heal_action")
+sqlPol.set_query_details("log_stream",6,"exception_input","exception_tag","heal_action")
+sqlPub.set_query_details("log_stream","id","exception_tag","heal_action")
 serviceNow = ServiceNow()
 
 
@@ -50,11 +50,11 @@ def predict_exception_tag():
             prepare_result_api(send_data, exc, nlpTag, heal_action)
             perform_healing( heal_action )
         else:
-            sqlPub.prepare_update(exc[0],"Not_Processed","Not_Healed")
-            prepare_result_api(send_data, exc, "Not_Processed", "Not_Healed")
+            sqlPub.prepare_update(exc[0],"Not_Processed","Not_Processed")
+            prepare_result_api(send_data, exc, "Not_Processed","Not_Processed")
         
-    sqlPub.clear_updates()
-    #sqlPub.write_result()
+    #sqlPub.clear_updates()
+    sqlPub.write_result()
     return send_data
         #tagging nlp model
         #es rule extract
@@ -65,6 +65,13 @@ def predict_exception_tag():
     # self.publish_result( exception, EXCEPT_MAPPING.get( exception_type ) )
     # steps = self.query_resolution( exception, exception_type )
     # self.perform_healing( steps )
+
+def get_feedback_rows():
+    send_data={"id":[],"exception_input":[],"process":[],"queue":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
+    for exc in sqlPol.poll_feedback():
+        print(exc)
+        send_data = prepare_result_api(send_data, exc, exc[4], exc[5])
+    return send_data
 
 def tag_one_batch():
     for exc in sqlPol.poll():
@@ -79,7 +86,7 @@ def tag_one_batch():
     
     sqlPub.write_result()
 
-def prepare_result_api( send_data, exc, tag, heal ):
+def prepare_result_api( send_data, exc, tag, heal):
     """
         Publishes the result to output/analytics stream
     """
@@ -92,7 +99,6 @@ def prepare_result_api( send_data, exc, tag, heal ):
     send_data["entry_time"].append(exc[6])
     
     return send_data
-
 
 
 def perform_healing( heal_action ):
@@ -110,7 +116,6 @@ def query_resolution( esRetriever, exc ):
     """
     return esRetriever.get_exception( exc[1], filter={ "queue" : [exc[2]], "process" : [exc[3]] } )
 
-
 def ngrok():
     from pyngrok import ngrok
 
@@ -126,3 +131,5 @@ def ngrok():
     #init_webhooks(public_url)
 
 ngrok()
+#print(predict_exception_tag())
+#print(get_feedback_rows())

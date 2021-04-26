@@ -5,16 +5,10 @@ from tagler.publisher.sql import SqlPublisher
 from tagler.tagger.inference import NLPTagClassifier
 from tagler.healer.actions import Email, ServiceNow
 from tagler.trainer.nlp_trainer import NLPTagTrainer
-from app import predict_exception_tag
+from app import predict_exception_tag, get_feedback_rows
 from pydantic import BaseModel
 import logging as LOGGER
 import time
-
-
-class TagException(BaseModel):
-    id:int
-    exception:str
-    tag:str
 
 
 app = FastAPI()
@@ -50,12 +44,18 @@ async def classify_expection():
 #     return jsonify({'status' : 200} )
 
 
-# @app.post('/tag-exception')
-# async def tag_exception( tagException : TagException ):
-#     try:
-#         # Write the tagged exception in table so that it can used for retraining purpose
-#         sqlPub.prepare_update( tagException.id, tagException.tag )
-#     except:
-#         return jsonify({'status', 400})
+@app.get('/tag-exception')
+async def tag_exception():
+    raw_data = get_feedback_rows()
+    return raw_data
 
-#     return jsonify({'status' : 200})
+
+@app.post('/push-feedback')
+async def push_feedback(data):
+    import ast
+    print(data)
+    print(list(data)[0])
+    res_list = ast.literal_eval(data)
+    print(res_list[0])
+    #raw_data = get_feedback_rows()
+    #preturn raw_data

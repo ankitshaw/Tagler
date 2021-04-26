@@ -13,3 +13,4 @@ insert into log_stream values(102,"Interviewer xxxx mail ID not found in invite.
 insert into log_stream values(103,"Invite not found in both TAX and PAS mailbox","Queue-12","Process-9","","","1/2/21 12:05");
 insert into log_stream values(104,"InternalFailed to evaluate expression 'Replace([MailBody],'$Item$',[Mail_Data.ID]) - The collection has no c","Queue-14","Process-11","","","1/2/21 12:15");
 insert into log_stream values(105,"Could not execute code stage because exception thrown by code stage: The given key was not present in the dictionary.","Queue-16","Process-13","","","1/2/21 12:25");
+insert into log_stream values(106,"Erro makes no sense has please call ps support","Queue-99","Process-13","","","1/2/21 12:25");

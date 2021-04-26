@@ -28,3 +28,4 @@ class KnowledgeBaseRetriever:
         if len(doc) != 0:
             doc = doc[0].to_dict()
             return doc["meta"]["exception_tag"], doc["meta"]["heal_action"]
+        return "",""

@@ -16,17 +16,23 @@ class SqlPoller:
     def poll(self):
         #self.cursor.execute(self.query)
         #self.cursor.fetchall()
-        return self.conn.execute(self.query)
+        return self.conn.execute(self.new_log_query)
+
+    def poll_feedback(self):
+        print(self.not_tag_query)
+        return self.conn.execute(self.not_tag_query)
     
-    def set_query_details(self, table:str, batchSize:int, logColumn:str, statusColumn: str):
+    def set_query_details(self, table:str, batchSize:int, logColumn:str, statusColumn: str, healColumn: str):
         self.table = table
         self.batchSize = batchSize
         self.logColumn = logColumn
         self.statusColumn = statusColumn
+        self.healColumn = healColumn
         #self.query = "SELECT TOP " + str(batchSize) + " " + logColumn + " FROM " + table + " Where " + statusColumn + " = Not Processed"
         #self.query = "SELECT TOP " + str(self.batchSize) + " * " + "FROM " + self.table + " Where " + statusColumn + " = ''"
         self.create_table_schema()
-        self.query = text("SELECT * FROM " + self.table + " Where " + statusColumn + " = '' ORDER BY date(entry_time)  DESC LIMIT " + str(self.batchSize))
+        self.new_log_query = text("SELECT * FROM " + self.table + " Where " + self.statusColumn + " = '' ORDER BY date(entry_time)  DESC LIMIT " + str(self.batchSize))
+        self.not_tag_query = text("SELECT * FROM " + self.table + " Where " + self.statusColumn + " = 'Not_Processed' OR " + self.healColumn + " = 'Not_Processed' ORDER BY date(entry_time)  DESC")
     
     def create_table_schema(self):
         # metadata = MetaData()
