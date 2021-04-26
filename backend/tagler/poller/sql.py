@@ -41,17 +41,3 @@ class SqlPoller:
         # )
         #metadata.create_all(self.engine)
         pass
-
-
-"""
-insert into logs values(101,"Invite not found in both CBS mailbox","Queue-12","Process-9","","","1/2/2021 11:45")
-CREATE TABLE train (
-	id INTEGER PRIMARY KEY,
-	exception_input TEXT NOT NULL,
-	process TEXT NOT NULL,
-	queue TEXT NOT NULL ,
-	exception_tag TEXT,
-	heal_action TEXT,
-	entry_time TEXT
-);
-"""

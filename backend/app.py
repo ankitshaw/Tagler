@@ -8,7 +8,10 @@ from tagler.publisher.sql import SqlPublisher
 from tagler.tagger.inference import NLPTagClassifier
 from tagler.healer.actions import Email, ServiceNow
 
-
+LOGGER.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=LOGGER.DEBUG)
+HOST = "enterprise-search-deployment-a65c03.es.ap-southeast-1.aws.found.io"
+USER = "elastic" 
+PWD = "BCpoZ0peFwMyRoLFaYVoI0o2"
 # kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
 # kb.load_csv("/workspaces/Tagler-Hackathon/models/kb.csv")
 
@@ -47,7 +50,7 @@ def predict_exception_tag():
             prepare_result_api(send_data, exc, nlpTag, heal_action)
             perform_healing( heal_action )
         else:
-            sqlPub.prepare_update(exc[0],"Not Processed","Not Healed")
+            sqlPub.prepare_update(exc[0],"Not_Processed","Not_Healed")
             prepare_result_api(send_data, exc, "Not_Processed", "Not_Healed")
         
     sqlPub.clear_updates()
@@ -120,7 +123,6 @@ def ngrok():
     LOGGER.info("ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}\"".format(public_url, port))
 
     # Update any base URLs or webhooks to use the public ngrok URL
-
     #init_webhooks(public_url)
 
 ngrok()

@@ -1,0 +1,15 @@
+CREATE TABLE train (
+	id INTEGER PRIMARY KEY,
+	exception_input TEXT NOT NULL,
+	process TEXT NOT NULL,
+	queue TEXT NOT NULL ,
+	exception_tag TEXT,
+	heal_action TEXT,
+	entry_time TEXT
+);
+
+insert into logs values(101,"Invite not found in both CBS mailbox","Queue-12","Process-9","","","1/2/2021 11:45")
+insert into log_stream values(102,"Interviewer xxxx mail ID not found in invite.","Queue-12","Process-9","","","1/2/21 11:55");
+insert into log_stream values(103,"Invite not found in both TAX and PAS mailbox","Queue-12","Process-9","","","1/2/21 12:05");
+insert into log_stream values(104,"InternalFailed to evaluate expression 'Replace([MailBody],'$Item$',[Mail_Data.ID]) - The collection has no c","Queue-14","Process-11","","","1/2/21 12:15");
+insert into log_stream values(105,"Could not execute code stage because exception thrown by code stage: The given key was not present in the dictionary.","Queue-16","Process-13","","","1/2/21 12:25");
