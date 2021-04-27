@@ -5,10 +5,13 @@ from tagler.publisher.sql import SqlPublisher
 from tagler.tagger.inference import NLPTagClassifier
 from tagler.healer.actions import Email, ServiceNow
 from tagler.trainer.nlp_trainer import NLPTagTrainer
-from app import predict_exception_tag, get_feedback_rows
+from app import predict_exception_tag, get_feedback_rows, push_feedback_rows, get_train_rows, get_log_rows
 from pydantic import BaseModel
+from tagler.publisher.model import SQL_PUSH
 import logging as LOGGER
 import time
+import ast
+from typing import List, Dict
 
 
 app = FastAPI()
@@ -49,13 +52,19 @@ async def tag_exception():
     raw_data = get_feedback_rows()
     return raw_data
 
-
 @app.post('/push-feedback')
-async def push_feedback(data):
-    import ast
-    print(data)
-    print(list(data)[0])
-    res_list = ast.literal_eval(data)
-    print(res_list[0])
-    #raw_data = get_feedback_rows()
-    #preturn raw_data
+async def push_feedback(data: List[Dict]):
+    #data = ast.literal_eval(data)
+    print(data[0]['id'])
+    push_feedback_rows(data)
+    #resp = push_feedback_rows(data)
+
+@app.get('/training_rows')
+async def training_rows():
+    raw_data = get_train_rows()
+    return raw_data
+
+@app.get('/new_log_rows')
+async def new_log_rows():
+    raw_data = get_log_rows()
+    return raw_data

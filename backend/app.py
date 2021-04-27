@@ -5,6 +5,7 @@ from tagler.esloader.healer import KnowledgeBaseLoader
 from tagler.healer.retriever import KnowledgeBaseRetriever
 from tagler.poller.sql import SqlPoller
 from tagler.publisher.sql import SqlPublisher
+from tagler.publisher.model import SQL_PUSH
 from tagler.tagger.inference import NLPTagClassifier
 from tagler.healer.actions import Email, ServiceNow
 
@@ -19,8 +20,8 @@ nlpTagger = NLPTagClassifier("/workspaces/Tagler-Hackathon/models","cpu")
 esRetriever = KnowledgeBaseRetriever(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
 sqlPol = SqlPoller(conn_string="sqlite:////workspaces/Tagler-Hackathon/models/tagler_prd.db")
 sqlPub = SqlPublisher(sqlPol.conn)
-sqlPol.set_query_details("log_stream",6,"exception_input","exception_tag","heal_action")
-sqlPub.set_query_details("log_stream","id","exception_tag","heal_action")
+sqlPol.set_query_details("log_stream","train",6,"exception_input","exception_tag","heal_action")
+sqlPub.set_query_details("log_stream","train","id","exception_tag","heal_action")
 serviceNow = ServiceNow()
 
 
@@ -61,14 +62,28 @@ def predict_exception_tag():
         #if confident update predicted tag and extract heal condition else update Not Processed and skip heal
 
 
-    # exception_type = self.classify_exception( exception )
-    # self.publish_result( exception, EXCEPT_MAPPING.get( exception_type ) )
-    # steps = self.query_resolution( exception, exception_type )
-    # self.perform_healing( steps )
-
 def get_feedback_rows():
     send_data={"id":[],"exception_input":[],"process":[],"queue":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
     for exc in sqlPol.poll_feedback():
+        print(exc)
+        send_data = prepare_result_api(send_data, exc, exc[4], exc[5])
+    return send_data
+
+def push_feedback_rows(send_data):
+    print(send_data)
+    sqlPub.set_update(send_data)
+    sqlPub.write_result_train()
+
+def get_train_rows():
+    send_data={"id":[],"exception_input":[],"process":[],"queue":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
+    for exc in sqlPol.poll_train():
+        print(exc)
+        send_data = prepare_result_api(send_data, exc, exc[4], exc[5])
+    return send_data
+
+def get_log_rows():
+    send_data={"id":[],"exception_input":[],"process":[],"queue":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
+    for exc in sqlPol.poll():
         print(exc)
         send_data = prepare_result_api(send_data, exc, exc[4], exc[5])
     return send_data
@@ -133,3 +148,4 @@ def ngrok():
 ngrok()
 #print(predict_exception_tag())
 #print(get_feedback_rows())
+#push_feedback(send_data=[{"id":106,"tag":"tp","heal":"ok"}])

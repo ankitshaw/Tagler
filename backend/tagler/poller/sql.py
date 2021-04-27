@@ -22,17 +22,22 @@ class SqlPoller:
         print(self.not_tag_query)
         return self.conn.execute(self.not_tag_query)
     
-    def set_query_details(self, table:str, batchSize:int, logColumn:str, statusColumn: str, healColumn: str):
+    def poll_train(self):
+        return self.conn.execute(self.train_query)
+    
+    def set_query_details(self, table:str, trainTable:str, batchSize:int, logColumn:str, statusColumn: str, healColumn: str):
         self.table = table
         self.batchSize = batchSize
         self.logColumn = logColumn
         self.statusColumn = statusColumn
         self.healColumn = healColumn
+        self.trainTable = trainTable
         #self.query = "SELECT TOP " + str(batchSize) + " " + logColumn + " FROM " + table + " Where " + statusColumn + " = Not Processed"
         #self.query = "SELECT TOP " + str(self.batchSize) + " * " + "FROM " + self.table + " Where " + statusColumn + " = ''"
         self.create_table_schema()
         self.new_log_query = text("SELECT * FROM " + self.table + " Where " + self.statusColumn + " = '' ORDER BY date(entry_time)  DESC LIMIT " + str(self.batchSize))
         self.not_tag_query = text("SELECT * FROM " + self.table + " Where " + self.statusColumn + " = 'Not_Processed' OR " + self.healColumn + " = 'Not_Processed' ORDER BY date(entry_time)  DESC")
+        self.train_query = text("SELECT * FROM " + self.trainTable)
     
     def create_table_schema(self):
         # metadata = MetaData()
