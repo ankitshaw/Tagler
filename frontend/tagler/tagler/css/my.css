@@ -12,6 +12,10 @@ label {
     justify-content: center;
 }
 
+.main {
+        padding-left:150px;
+}
+
 /*.stButton>button {
     color: #4F8BF9;
     border-radius: 10%

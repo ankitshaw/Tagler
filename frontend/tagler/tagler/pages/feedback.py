@@ -3,12 +3,13 @@ import streamlit as st
 import os
 from utils import poll_feedback, load_css, push_feedback
 import pandas as pd
+import time
 
 columns = ["id","exception_input","process","queue","exception_tag","heal_action","entry_time"]
 
 def write():
 	load_css("./css/my.css")
-	st.markdown('<p class="big-font">Tagger Poll</p>', unsafe_allow_html=True)
+	st.markdown('<p class="big-font">Send Feedback</p>', unsafe_allow_html=True)
 	
 	#run_query = st.button("Get Logs for Feedback")
 	refresh = st.button("Refresh")
@@ -66,8 +67,14 @@ def create_body(df):
 
 	insert = st.button("Send Feedback")
 	if insert:
-		st.write(mp)
+		r = send_data(mp)
 
 def send_data(mp):
-	resp = push_feedback(mp)
-	st.write(resp)
+	data = []
+	for key in mp:
+		data.append(mp[key])
+
+	print(data)
+	resp = push_feedback(data)
+	if resp == None:
+		st.write("Feedback Successful")

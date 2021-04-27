@@ -1,6 +1,7 @@
 import requests
 import streamlit as st
 import os
+import json
 
 API_ENDPOINT = os.getenv("API_ENDPOINT", "https://haystack-demo-api.deepset.ai")
 MODEL_ID = "1"
@@ -9,6 +10,8 @@ TAGGER = "classify-exception"
 FEEDBACK = "tag-exception"
 PUSH = "push-feedback"
 INSERT = "insert"
+TRAINING_ROWS = "training_rows"
+LOG_ROWS="new_log_rows"
 
 
 @st.cache(show_spinner=False)
@@ -36,8 +39,20 @@ def poll_feedback(file):
 
 
 def push_feedback(data):
-   url = API_ENDPOINT + "/" + FEEDBACK
-   resp = requests.post(url,data)
+   url = API_ENDPOINT + "/" + PUSH
+   headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
+   resp = requests.post(url,data = json.dumps(data), headers = headers)
+   return json2Df(resp.json())
+
+def poll_training(file):
+   url = API_ENDPOINT + "/" + TRAINING_ROWS
+   resp = requests.get(url)
+   print(resp)
+   return json2Df(resp.json())
+
+def poll_log(file):
+   url = API_ENDPOINT + "/" + LOG_ROWS
+   resp = requests.get(url)
    print(resp)
    return json2Df(resp.json())
 
