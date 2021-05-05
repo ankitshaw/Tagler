@@ -10,10 +10,10 @@ from transformers import AutoModel, BertTokenizerFast
 
 class NLPTagTrainer():
 
-    def load_training_data(self,filePath:str):
+    def load_training_data(self,filePath:str, tags:List=["Business Exception", "System Exception"]):
         self.filePath  = filePath
         trainData = pd.read_csv( filePath )
-        trainData = trainData.replace( "Business Exception", 0 ).replace( "System Exception", 1 )
+        trainData = trainData.replace( tags[0], 0 ).replace( tags[1], 1 )
         return trainData
 
     def save_model():
