@@ -12,11 +12,35 @@ class NLPTagTrainer():
 
     def load_training_data(self,filePath:str, tags:List=["Business Exception", "System Exception"]):
         self.filePath  = filePath
-        trainData = pd.read_csv( filePath )
-        trainData = trainData.replace( tags[0], 0 ).replace( tags[1], 1 )
-        return trainData
+        self.trainData = pd.read_csv( filePath )
+        self.trainData = trainData.replace( tags[0], 0 ).replace( tags[1], 1 )
+        return self
 
-    def save_model():
+    def new_case_train(self, data:List, dbPath:str, tags:List=["Business Exception", "System Exception"]):
+        self.newData = get_data_from_db(dbPath)
+        self.newData = self.newData.replace( tags[0], 0 ).replace( tags[1], 1 )
+        
+        bert = AutoModel.from_pretrained('bert-base-uncased')
+        tokenizer = BertTokenizerFast.from_pretrained('bert-base-uncased')
+        max_seq_len = 25
+
+        tokens_train = tokenizer.batch_encode_plus(
+            self.newData,
+            max_length = max_seq_len,
+            pad_to_max_length=True,
+            truncation=True,
+            return_token_type_ids=False
+        )
+
+        train_seq = torch.tensor(tokens_train['input_ids'])
+        train_mask = torch.tensor(tokens_train['attention_mask'])
+        train_y = torch.tensor(tags)
+
+
+
+
+
+    def save_model(filePath:str):
         filePath = ''
         pass
 
