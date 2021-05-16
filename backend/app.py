@@ -10,11 +10,12 @@ from tagler.tagger.inference import NLPTagClassifier
 from tagler.healer.actions import Email, ServiceNow
 
 LOGGER.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=LOGGER.DEBUG)
-HOST = "enterprise-search-deployment-a65c03.es.ap-southeast-1.aws.found.io"
+HOST = "compute-optimized-deployment.es.asia-southeast1.gcp.elastic-cloud.com"
 USER = "elastic" 
-PWD = "BCpoZ0peFwMyRoLFaYVoI0o2"
-# kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
-# kb.load_csv("/workspaces/Tagler-Hackathon/models/kb.csv")
+PWD = "yIk9EQGWNeve5aE9yHObDUcC"
+
+#kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
+#kb.load_csv("/workspaces/Tagler-Hackathon/models/kb.csv")
 
 nlpTagger = NLPTagClassifier("/workspaces/Tagler-Hackathon/models","cpu")
 esRetriever = KnowledgeBaseRetriever(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
