@@ -4,12 +4,15 @@ import pages.welcome
 import pages.tagger
 import pages.insert
 import pages.feedback
+import pages.training
+from utils import load_css
 
 PAGES = {
     "Welcome": pages.welcome,
     "Tagger Exception": pages.tagger,
     "Insert to DB": pages.insert,
     "Feedback": pages.feedback,
+    "Train": pages.training,
 }
 
 
