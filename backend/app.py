@@ -14,14 +14,14 @@ HOST = "compute-optimized-deployment.es.asia-southeast1.gcp.elastic-cloud.com"
 USER = "elastic" 
 PWD = "yIk9EQGWNeve5aE9yHObDUcC"
 
-#kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
+kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
 #kb.load_csv("/workspaces/Tagler-Hackathon/models/kb.csv")
 
 nlpTagger = NLPTagClassifier("/workspaces/Tagler-Hackathon/models","cpu")
 esRetriever = KnowledgeBaseRetriever(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
 sqlPol = SqlPoller(conn_string="sqlite:////workspaces/Tagler-Hackathon/models/tagler_prd.db")
 sqlPub = SqlPublisher(sqlPol.conn)
-sqlPol.set_query_details("log_stream","train",6,"exception_input","exception_tag","heal_action")
+sqlPol.set_query_details("log_stream","train",10,"exception_input","exception_tag","heal_action")
 sqlPub.set_query_details("log_stream","train","id","exception_tag","heal_action")
 serviceNow = ServiceNow()
 
@@ -47,7 +47,8 @@ def predict_exception_tag():
         esTag, heal_action = query_resolution( esRetriever, exc )
         print(nlpTag)
         print(esTag)
-        if nlpTag == esTag:
+        if nlpTag == esTag or esTag:
+            nlpTag=esTag #confidence logic needed
             sqlPub.prepare_update(exc[0],nlpTag,heal_action)
             prepare_result_api(send_data, exc, nlpTag, heal_action)
             perform_healing( heal_action )
@@ -64,7 +65,7 @@ def predict_exception_tag():
 
 
 def get_feedback_rows():
-    send_data={"id":[],"exception_input":[],"process":[],"queue":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
+    send_data={"id":[],"exception_input":[],"queue":[],"process":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
     for exc in sqlPol.poll_feedback():
         print(exc)
         send_data = prepare_result_api(send_data, exc, exc[4], exc[5])
@@ -74,9 +75,15 @@ def push_feedback_rows(send_data):
     print(send_data)
     sqlPub.set_update(send_data)
     sqlPub.write_result_train()
+    es_load = []
+    for exc in sqlPol.poll_train():
+        print(exc)
+        es_load.append(prepare_es_load(exc))
+        print(es_load)
+    kb.load_from_ui(es_load)
 
 def get_train_rows():
-    send_data={"id":[],"exception_input":[],"process":[],"queue":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
+    send_data={"id":[],"exception_input":[],"queue":[],"process":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
     for exc in sqlPol.poll_train():
         print(exc)
         send_data = prepare_result_api(send_data, exc, exc[4], exc[5])
@@ -108,14 +115,19 @@ def prepare_result_api( send_data, exc, tag, heal):
     """
     send_data["id"].append(exc[0])
     send_data["exception_input"].append(exc[1])
-    send_data["process"].append(exc[2])
-    send_data["queue"].append(exc[3])
+    send_data["queue"].append(exc[2])
+    send_data["process"].append(exc[3])
     send_data["exception_tag"].append(tag)
     send_data["heal_action"].append(heal)
     send_data["entry_time"].append(exc[6])
     
     return send_data
 
+def prepare_es_load(exc):
+    return {"text":"","id":str(exc[0]+100),"exception_input":exc[1],"queue":exc[2],"process":exc[3],"exception_tag":exc[4],"heal_action":exc[5],"entry_time":exc[6]}
+
+def insert_new_log(data):
+    sqlPol.new_log(data)
 
 def perform_healing( heal_action ):
     """

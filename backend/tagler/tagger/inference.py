@@ -60,6 +60,7 @@ class NLPTagClassifier():
             output      = self.classifier( data[0].to(self.device), data[1].to(self.device) )
             output      = output.detach().cpu().numpy()
 
+        print(output)
         exception_type = np.argmax( output, axis = 1 )
 
         return EXCEPT_MAPPING[exception_type[0]] #will have to return before argmax as raw output to check the degree of confidence else dont tag

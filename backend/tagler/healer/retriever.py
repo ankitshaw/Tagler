@@ -25,6 +25,7 @@ class KnowledgeBaseRetriever:
     
     def get_exception(self, exception:str, filter:dict=None):
         doc  = self.retriever.retrieve(exception,top_k=1, filters=filter)
+        print(doc)
         if len(doc) != 0:
             doc = doc[0].to_dict()
             return doc["meta"]["exception_tag"], doc["meta"]["heal_action"]

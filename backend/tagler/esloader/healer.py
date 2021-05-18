@@ -29,6 +29,6 @@ class KnowledgeBaseLoader:
 
         return documents
     
-    def load_sql_table(self):
-        #To be taken up if needed
-        pass
+    def load_from_ui(self, data):
+        print(data)
+        self.document_store.write_documents(data)

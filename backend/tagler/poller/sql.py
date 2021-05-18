@@ -12,6 +12,7 @@ class SqlPoller:
         else: 
             self.conn = pyodbc.connect('DRIVER={'+driver+'};SERVER='+server+':'+str(port)+';DATABASE='+database+';UID='+username+';PWD='+ password)
             self.cursor = self.conn.cursor()
+        self.reset_data()
     
     def poll(self):
         #self.cursor.execute(self.query)
@@ -34,21 +35,21 @@ class SqlPoller:
         self.trainTable = trainTable
         #self.query = "SELECT TOP " + str(batchSize) + " " + logColumn + " FROM " + table + " Where " + statusColumn + " = Not Processed"
         #self.query = "SELECT TOP " + str(self.batchSize) + " * " + "FROM " + self.table + " Where " + statusColumn + " = ''"
-        self.create_table_schema()
         self.new_log_query = text("SELECT * FROM " + self.table + " Where " + self.statusColumn + " = '' ORDER BY date(entry_time)  DESC LIMIT " + str(self.batchSize))
         self.not_tag_query = text("SELECT * FROM " + self.table + " Where " + self.statusColumn + " = 'Not_Processed' OR " + self.healColumn + " = 'Not_Processed' ORDER BY date(entry_time)  DESC")
         self.train_query = text("SELECT * FROM " + self.trainTable)
     
-    def create_table_schema(self):
-        # metadata = MetaData()
-        # self.log_table = Table('log_table', metadata,
-        #     Column('id', Integer(), primary_key=True),
-        #     Column('exception_input', String(300), nullable=False),
-        #     Column('process', String(30), nullable=False),
-        #     Column('queue', String(30), nullable=False),
-        #     Column('exception_tag', String(30), nullable=True),
-        #     Column('heal_action', String(50), nullable=True),
-        #     Column('entry_time', DateTime(), default=datetime.now),
-        # )
-        #metadata.create_all(self.engine)
-        pass
+    def reset_data(self):
+        self.conn.execute("DELETE FROM log_stream")
+        self.conn.execute("DELETE FROM train")
+        self.conn.execute('insert into log_stream values(101,"Invite not found in both CBS mailbox","Queue-12","Process-9","","","1/2/2021 11:45")');
+        self.conn.execute('insert into log_stream values(102,"Interviewer xxxx mail ID not found in invite.","Queue-12","Process-9","","","1/2/21 11:55")');
+        self.conn.execute('insert into log_stream values(103,"Invite not found in both TAX and PAS mailbox","Queue-12","Process-9","","","1/2/21 12:05")');
+        self.conn.execute('insert into log_stream values(104,"InternalFailed to evaluate expression Replace([MailBody],$Item$,[Mail_Data.ID]) - The collection has no c","Queue-14","Process-11","","","1/2/21 12:15")');
+        self.conn.execute('insert into log_stream values(105,"Could not execute code stage because exception thrown by code stage: The given key was not present in the dictionary.","Queue-16","Process-13","","","1/2/21 12:25")');
+        self.conn.execute('insert into log_stream values(106,"Error makes no sense has please call ps support","Queue-99","Process-13","","","1/2/21 12:25")');
+        self.conn.execute('insert into log_stream values(107,"Error makes no sense has please call ps support","Queue-11","Process-11","","","1/2/21 12:25")');
+        
+    def new_log(self,data):
+        self.conn.execute('insert into log_stream values('+str(data[0])+',"'+data[1]+'","'+data[2]+'","'+data[3]+'","'+data[4]+'","'+data[5]+'","'+data[6]+'")');
+    

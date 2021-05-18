@@ -5,7 +5,7 @@ from tagler.publisher.sql import SqlPublisher
 from tagler.tagger.inference import NLPTagClassifier
 from tagler.healer.actions import Email, ServiceNow
 from tagler.trainer.nlp_trainer import NLPTagTrainer
-from app import predict_exception_tag, get_feedback_rows, push_feedback_rows, get_train_rows, get_log_rows
+from app import predict_exception_tag, get_feedback_rows, push_feedback_rows, get_train_rows, get_log_rows, insert_new_log
 from pydantic import BaseModel
 from tagler.publisher.model import SQL_PUSH
 import logging as LOGGER
@@ -68,3 +68,7 @@ async def training_rows():
 async def new_log_rows():
     raw_data = get_log_rows()
     return raw_data
+
+@app.post('/insert')
+async def insert(data:List):
+    raw_data = insert_new_log(data)
