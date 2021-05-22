@@ -23,7 +23,7 @@ def write():
 		create_header()
 		create_body(df)	
 	else:
-		st.write("Great! No pending feedbacks!")
+		st.write("Great! No pending feedbacks to tag and train!")
 
 
 
@@ -67,7 +67,8 @@ def create_body(df):
 
 	insert = st.button("Train")
 	if insert:
-		r = send_data(mp)
+		with st.spinner("Sending feedback and train KB... "):
+			r = send_data(mp)
 
 def send_data(mp):
 	data = []

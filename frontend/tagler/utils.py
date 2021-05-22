@@ -19,7 +19,7 @@ headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
 def insert_db(data):
    url = API_ENDPOINT + "/" + INSERT
    response_raw = requests.post(url,data = json.dumps(data), headers = headers)
-   return response_raw
+   return json2Df(response_raw.json())
 
 #@st.cache(show_spinner=False) //Check 
 def poll_tag(file):

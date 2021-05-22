@@ -67,7 +67,9 @@ def body2(n):
     if run_query:
         with st.spinner("Performing insert in db... "):
             results = insert_db(list(data))
-        st.write(results)
+            print(results)
+            if results == None:
+                st.write("Logs created in DB.")
 
 
 
