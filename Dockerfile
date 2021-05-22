@@ -14,5 +14,4 @@ COPY ./models /tagler/models
 
 ENTRYPOINT [ "python3" ]
 
-#CMD [ "tagler/backend/app.py" ]
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["cd/backend", uvicorn", "api:app", "--host", "0.0.0.0", "--port", "80"]

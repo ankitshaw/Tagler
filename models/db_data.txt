@@ -46,3 +46,21 @@ END;
 }
 
 /tagger-healer/_delete_by_query
+
+
+
+                self.conn.execute('insert into log_stream values('+str(d[0])+',"'+d[1]+'","'+d[2]+'","'+d[3]+'","'+d[4]+'","'+d[5]+'","'+d[6]+'")');
+
+101|Invite not found in both CBS mailbox|Queue-12|Process-9|Business Exception|Raised Ticket|1/2/2021 11:45
+102|Interviewer xxxx mail ID not found in invite.|Queue-12|Process-9|Business Exception|Raised Ticket|1/2/21 11:55
+103|Invite not found in both TAX and PAS mailbox|Queue-12|Process-9|Business Exception|Raised Ticket|1/2/21 12:05
+104|InternalFailed to evaluate expression Replace([MailBody],$Item$,[Mail_Data.ID]) - The collection has no c|Queue-14|Process-11|System Exception|Restarted Process|1/2/21 12:15
+105|Could not execute code stage because exception thrown by code stage: The given key was not present in the dictionary.|Queue-16|Process-13|System Exception|Restarted Process|1/2/21 12:25
+106|Error makes no sense has please call ps support|Queue-99|Process-13|System Exception|Raise Ticket|1/2/21 12:25
+107|Error makes no sense has please call ps support|Queue-11|Process-11|Business Exception|Mail User|1/2/21 12:25
+300|Error makes no sense has please call ps support|Queue-11|Process-11|Business Exception|Mail User|1/1/21 11:11
+301|Error makes no sense has please call ps support|Queue-99|Process-13|System Exception|Raise Ticket|1/1/21 11:21
+302|Error makes no sense has please call ps support|Queue-10|Process-13|System Exception|Raise Ticket|1/1/21 11:31
+304|Bot could not find the right email template from the mail box|Queue-10|Process-10|Business Exception|Mail User|1/21/11 12:11
+401|Bot could not find the right email template from the mail box|Queue-10|Process-10|Business Exception|Mail User|1/1/22 11:51
+sqlite> 

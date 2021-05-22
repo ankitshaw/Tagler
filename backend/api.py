@@ -70,5 +70,5 @@ async def new_log_rows():
     return raw_data
 
 @app.post('/insert')
-async def insert(data:List):
+async def insert(data:List[List]):
     raw_data = insert_new_log(data)
