@@ -9,7 +9,7 @@ columns = ["id","exception_input","queue","process","exception_tag","heal_action
 
 def write():
 	load_css("./css/my.css")
-	st.markdown('<p class="big-font">Send Feedback</p>', unsafe_allow_html=True)
+	st.markdown('<p class="big-font">Train Feedback</p>', unsafe_allow_html=True)
 	
 	#run_query = st.button("Get Logs for Feedback")
 	refresh = st.button("Refresh")
@@ -65,7 +65,7 @@ def create_body(df):
 			mp[df[columns[0]][i]]["tag"] = tag
 			mp[df[columns[0]][i]]["heal"] = heal
 
-	insert = st.button("Send Feedback")
+	insert = st.button("Train")
 	if insert:
 		r = send_data(mp)
 
@@ -77,4 +77,4 @@ def send_data(mp):
 	print(data)
 	resp = push_feedback(data)
 	if resp == None:
-		st.write("Feedback Successful")
+		st.write("Feedback Trained Successful")

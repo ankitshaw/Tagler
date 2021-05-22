@@ -9,22 +9,22 @@ columns = ["id","exception_input","process","queue","exception_tag","heal_action
 
 def write():
 	load_css("./css/my.css")
-	st.markdown('<p class="big-font">Training Feedback</p>', unsafe_allow_html=True)
+	st.markdown('<p class="big-font">Trained Exception</p>', unsafe_allow_html=True)
 	
-	run_query = st.button("Poll")
-	train = st.button("Train")
+	run_query = st.button("Find")
+	#train = st.button("Train")
 	if run_query:
 		with st.spinner("Retrieving rows to be trained..."):
 			df = poll_training(run_query)
 
-		st.write("## Log for training:")
+		#st.write("## Log for training:")
 		st.write(pd.DataFrame(df))
 
-	if train:
-		my_bar = st.progress(0)
-		for percent_complete in range(100):
-			time.sleep(0.1)
-			my_bar.progress(percent_complete + 1)
+	# if train:
+	# 	my_bar = st.progress(0)
+	# 	for percent_complete in range(100):
+	# 		time.sleep(0.1)
+	# 		my_bar.progress(percent_complete + 1)
 
 
 def send_data(mp):

@@ -3,7 +3,7 @@ import streamlit as st
 import os
 import json
 
-API_ENDPOINT = os.getenv("API_ENDPOINT", "https://haystack-demo-api.deepset.ai")
+API_ENDPOINT = os.getenv("API_ENDPOINT", "https://ankitshaw-tagler-hackathon-cpvg-8000.githubpreview.dev")
 MODEL_ID = "1"
 DOC_REQUEST = "query"
 TAGGER = "classify-exception"
@@ -53,8 +53,9 @@ def poll_training(file):
 
 def poll_log(file):
    url = API_ENDPOINT + "/" + LOG_ROWS
+   print(url)
    resp = requests.get(url)
-   print(resp)
+   print(resp.json)
    return json2Df(resp.json())
 
 

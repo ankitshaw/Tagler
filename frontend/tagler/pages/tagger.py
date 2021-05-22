@@ -7,10 +7,10 @@ import pandas as pd
 
 def write():
 	load_css("./css/my.css")
-	st.markdown('<p class="big-font">Tagger</p>', unsafe_allow_html=True)
+	st.markdown('<p class="big-font">Log Tagger</p>', unsafe_allow_html=True)
 
-	run_query = st.button("Poll")
-	tag = st.button("Tag")
+	run_query = st.button("Get New Exception")
+	tag = st.button("Identify Exception Tag")
 	if run_query:
 		with st.spinner("Retrieving new Exceptions from DB..."):
 			df = poll_log(run_query)

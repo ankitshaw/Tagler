@@ -10,11 +10,14 @@ def annotate_answer(answer,context):
     annotated_text(context[:start_idx],(answer,"ANSWER","#8ef"),context[end_idx:])
 
 def write():
-    load_css("./css/my.css")      
-    st.write("Insert New Exception to DB")
+    load_css("./css/my.css")
+    st.markdown('<p class="big-font">Create New Log</p>', unsafe_allow_html=True)
     #query = st.text_input("Please provide your query:",value="INSERT INTO...")
+
+    count = 4
     create_header()
-    body()
+        #body()
+    body2(int(count))
 
 
 
@@ -32,8 +35,6 @@ def body():
     ip = col2.text_input(label=columns[1])
     q =  col3.text_input(label=columns[2])
     p = col4.text_input(label=columns[3])
-    #tag = col5.selectbox('Exceptions',('Not_Processed','System Exception', 'Business Exception'))#col5.text_input(label="Exception Tag", key=str(df[columns[0]][i]))
-    #heal = col6.selectbox('Heal Action',('Not_Processed','Raise Ticket', 'Mail User', 'Restart Process'))#col6.text_input(label="Heal Action", key=str(df[columns[0]][i]))
     t = col5.text_input(label=columns[6])
 
     data = [int(id),ip,q,p,"","",t]
@@ -42,6 +43,30 @@ def body():
     if run_query:
         with st.spinner("Performing insert in db... "):
             results = insert_db(data)
+        st.write(results)
+
+def body2(n):
+    
+    mp = {}
+
+    for i in range(n):
+        mp[i] = []
+        col1, col2, col3, col4, col5= st.beta_columns((0.4,2,0.6,0.6,0.6))
+
+        id = col1.text_input(value="0",label=columns[0],key=str(i))
+        ip = col2.text_input(label=columns[1],key=str(i))
+        q =  col3.text_input(label=columns[2],key=str(i))
+        p = col4.text_input(label=columns[3],key=str(i))
+        t = col5.text_input(label=columns[6],key=str(i))
+
+        mp[i] = [int(id),ip,q,p,"","",t]
+
+    data = mp.values() #[int(id),ip,q,p,"","",t]
+
+    run_query = st.button("Create")
+    if run_query:
+        with st.spinner("Performing insert in db... "):
+            results = insert_db(list(data))
         st.write(results)
 
 

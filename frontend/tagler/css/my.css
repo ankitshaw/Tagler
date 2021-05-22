@@ -13,7 +13,8 @@ label {
 }
 
 .main {
-        padding-left:150px;
+        padding-left:90px;
+        padding-right: 90px;
 }
 
 /*.stButton>button {
@@ -31,3 +32,7 @@ label {
 .big-font {
         font-size:50px !important;
     }
+
+.css-1aumxhk {
+    padding: 1rem 2rem ;
+}
