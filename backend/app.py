@@ -15,6 +15,7 @@ USER = "elastic"
 PWD = "yIk9EQGWNeve5aE9yHObDUcC"
 
 kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
+kb2 = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer-stream", search_fields="exception_input")
 #kb.load_csv("/workspaces/Tagler-Hackathon/models/kb.csv")
 
 nlpTagger = NLPTagClassifier("/workspaces/Tagler-Hackathon/models","cpu")
@@ -41,6 +42,7 @@ def predict_exception_tag():
         Performs prediction for all the data present in db performs resolution steps
     """
     send_data={"id":[],"exception_input":[],"process":[],"queue":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
+    es_load = []
     for exc in sqlPol.poll():
         print(exc)
         nlpTag = nlpTagger.classify_exception(exc[1])
@@ -58,6 +60,7 @@ def predict_exception_tag():
         
     #sqlPub.clear_updates()
     sqlPub.write_result()
+    kb2.load_from_ui(prepare_es_load_log(send_data))
     return send_data
         #tagging nlp model
         #es rule extract
@@ -81,6 +84,7 @@ def push_feedback_rows(send_data):
         es_load.append(prepare_es_load(exc))
         print(es_load)
     kb.load_from_ui(es_load)
+    kb2.load_from_ui(es_load)
 
 def get_train_rows():
     send_data={"id":[],"exception_input":[],"queue":[],"process":[],"exception_tag":[],"heal_action":[],"entry_time":[]}
@@ -122,6 +126,14 @@ def prepare_result_api( send_data, exc, tag, heal):
     send_data["entry_time"].append(exc[6])
     
     return send_data
+
+
+def prepare_es_load_log(send_data):
+    es_load = []
+    for i in range(len(send_data["id"])):
+        if send_data["exception_tag"][i] != "Not_Processed":
+            es_load.append({"text":"","id":send_data["id"][i],"exception_input":send_data["exception_input"][i],"queue":send_data["queue"][i],"process":send_data["process"][i],"exception_tag":send_data["exception_tag"][i],"heal_action":send_data["heal_action"][i],"entry_time":send_data["entry_time"][i]})
+    return es_load
 
 def prepare_es_load(exc):
     return {"text":"","id":str(exc[0]+100),"exception_input":exc[1],"queue":exc[2],"process":exc[3],"exception_tag":exc[4],"heal_action":exc[5],"entry_time":exc[6]}
