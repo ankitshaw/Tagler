@@ -6,12 +6,16 @@ WORKDIR /
 
 RUN pip3 install -r requirements.txt
 
-EXPOSE 80
+EXPOSE 8000 8501
 
-COPY ./backend /tagler/backend
-COPY ./frontend /tagler/frontend
-COPY ./models /tagler/models
+COPY ./backend /backend
+COPY ./frontend /frontend
+COPY ./models /models
+
+WORKDIR /backend
 
 ENTRYPOINT [ "python3" ]
 
-CMD ["cd/backend", uvicorn", "api:app", "--host", "0.0.0.0", "--port", "80"]
+#CMD ["cd /frontend/tagler"]
+#CMD ["streamlit", "run", "web_app.py"]
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]

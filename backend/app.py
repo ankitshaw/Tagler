@@ -18,9 +18,9 @@ kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, pass
 kb2 = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer-stream", search_fields="exception_input")
 #kb.load_csv("/workspaces/Tagler-Hackathon/models/kb.csv")
 
-nlpTagger = NLPTagClassifier("/workspaces/Tagler-Hackathon/models","cpu")
+nlpTagger = NLPTagClassifier("../models","cpu")
 esRetriever = KnowledgeBaseRetriever(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
-sqlPol = SqlPoller(conn_string="sqlite:////workspaces/Tagler-Hackathon/models/tagler_prd.db")
+sqlPol = SqlPoller(conn_string="sqlite:///../models/tagler_prd.db")
 sqlPub = SqlPublisher(sqlPol.conn)
 sqlPol.set_query_details("log_stream","train",10,"exception_input","exception_tag","heal_action")
 sqlPub.set_query_details("log_stream","train","id","exception_tag","heal_action")
