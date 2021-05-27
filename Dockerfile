@@ -14,8 +14,6 @@ COPY ./models /models
 
 WORKDIR /backend
 
-ENTRYPOINT [ "python3" ]
-
 #CMD ["cd /frontend/tagler"]
 #CMD ["streamlit", "run", "web_app.py"]
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
