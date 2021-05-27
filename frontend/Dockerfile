@@ -15,4 +15,4 @@ COPY ./tagler /tagler
 
 WORKDIR /tagler
 
-CMD ["streamlit", "run", "web_app.py", "--server.port=8501", "--server.enableCORS=false", "--server.enableXsrfProtection=true"]
+CMD ["streamlit", "run", "web_app.py", "--server.port=8501", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]

@@ -7,10 +7,6 @@ label {
     display: none;
 }
 
-footer {
-    display: none;
-}
-
 .fullScreenFrame > div {
     display: flex;
     justify-content: center;
