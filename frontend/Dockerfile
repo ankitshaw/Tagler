@@ -4,7 +4,7 @@ FROM python:3.7
 
 WORKDIR /
 
-RUN pip install streamlit
+RUN pip install streamlit==0.72.0
 
 #RUN pip3 install -r requirements.txt
 RUN export API_ENDPOINT=http://127.0.0.1:8000

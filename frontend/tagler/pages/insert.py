@@ -1,13 +1,8 @@
 import streamlit as st
 from utils import insert_db, insert_db, load_css
-from annotated_text import annotated_text
 
 columns = ["id","exception_input","queue","process","exception_tag","heal_action","entry_time"]
 
-def annotate_answer(answer,context):
-    start_idx = context.find(answer)
-    end_idx = start_idx+len(answer)
-    annotated_text(context[:start_idx],(answer,"ANSWER","#8ef"),context[end_idx:])
 
 def write():
     load_css("./css/my.css")

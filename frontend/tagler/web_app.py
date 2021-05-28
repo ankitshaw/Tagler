@@ -17,7 +17,7 @@ PAGES = {
 
 
 def main():
-    st.set_page_config(page_title="EY-Tagler",page_icon="⚠️",layout="wide")
+    st.set_page_config(page_title="Ernst & Young - Tagler: Smart Exception Tagger and Healer",page_icon="⚠️",layout="wide")
     load_css("./css/my.css")  
     #st.write('<style>body { margin: 0; font-family: Arial, Helvetica, sans-serif;} .header{padding: 10px 16px; background: #000000; color: #ffffff; position:fixed;top:0;} .sticky { position: fixed; top: 0; width: 300%;} </style><div class="header" id="myHeader">Tagler</div>', unsafe_allow_html=True)
     st.sidebar.image("./images/favicon.png", width=100)
