@@ -2,7 +2,7 @@ id,exception_input,queue,process,exception_tag,heal_action,entry_time
 101,Invite not found in both CBS mailbox,Queue-12,Process-9,,,1/2/21 11:45
 102,Interviewer xxxx mail ID not found in invite.,Queue-12,Process-9,,,1/2/21 11:55
 103,Invite not found in both TAX and PAS mailbox,Queue-12,Process-9,,,1/2/21 12:05
-104,"InternalFailed to evaluate expression 'Replace([MailBody],$Item$,[Mail_Data.ID]) - The collection has no c",Queue-14,Process-11,,,1/2/21 12:15
+104,InternalFailed to evaluate expression 'Replace([MailBody],$Item$,[Mail_Data.ID]) - The collection has no c,Queue-14,Process-11,,,1/2/21 12:15
 105,Could not execute code stage because exception thrown by code stage: The given key was not present in the dictionary.,Queue-16,Process-13,,,1/2/21 12:25
 106,Email Id not found Failed to read Email,Queue-17,Process-8,,,1/2/21 12:35
 107,Automatically set exception at CleanUp,Queue-1,Process-1,,,1/2/21 12:45
@@ -21,14 +21,14 @@ id,exception_input,queue,process,exception_tag,heal_action,entry_time
 120,Mandatory field missing - PO not created by parent To be proecssed manually,Queue-10,Process-7,,,1/2/21 14:56
 121,Unexpected Error occured in adding requests in a request form to queue,Queue-45,Process-21,,,1/2/21 15:06
 122,Failed to perform step 1 in Read Stage 'Read product model' on page 'Purchase Order Line Items' - The object invoked has disconnected from its clients. (Exception from HRESULT: 0x80010108 (RPC_E_DISCONNECTED)),Queue-9,Process-7,,,1/2/21 15:16
-123,"Email does not contains the right Subject, subject does not start with **",Queue-52,Process-36,,,1/2/21 15:26
+123,Email does not contains the right Subject, subject does not start with **,Queue-52,Process-36,,,1/2/21 15:26
 124,BBC Update failed for BBC ID- 209- The remote server returned an error: (504) Gateway Timeout.,Queue-5,Process-2,,,1/2/21 15:36
 125,BBC Update failed for BBC ID- 421- The remote server returned an error: (504) Gateway Timeout.,Queue-5,Process-2,,,1/2/21 15:46
 126,2034 - TFD - NO Entries to be Processed,Queue-41,Process-31,,,1/2/21 15:57
-127,"Failed to perform step 1 in Navigate Stage 'Invoke JS RAM Visible?' on page 'Place Order' - Failed while invoking javascript method:Exception from HRESULT: 0x80020101->   at mshtml.HTMLWindow2Class.IHTMLWindow2_execScript(String code, String language)  at BluePrism.ApplicationManager.HTML.clsHTMLDocument.InvokeJavascriptMethod(String methodname, String jsonargs, Object& retval, String& sErr) To be proecssed manually",Queue-10,Process-7,,,1/2/21 16:07
-128,"Email template not found, Bot failed to send the output file",Queue-58,Process-40,,,1/2/21 16:17
+127,Failed to perform step 1 in Navigate Stage 'Invoke JS RAM Visible?' on page 'Place Order' - Failed while invoking javascript method:Exception from HRESULT: 0x80020101->   at mshtml.HTMLWindow2Class.IHTMLWindow2_execScript(String code, String language)  at BluePrism.ApplicationManager.HTML.clsHTMLDocument.InvokeJavascriptMethod(String methodname, String jsonargs, Object& retval, String& sErr) To be proecssed manually,Queue-10,Process-7,,,1/2/21 16:07
+128,Email template not found, Bot failed to send the output file,Queue-58,Process-40,,,1/2/21 16:17
 129,Failed to perform step 1 in Write Stage 'Write to EY House Bank' on page 'W- Coding Block' - Exception has been thrown by the target of an invocation.,Queue-30,Process-23,,,1/2/21 16:27
-130,"Failed to perform step 1 in Navigate Stage 'Navigate1' on page 'N-Search Req' - Failed while invoking javascript method:Exception from HRESULT: 0x80020101->   at mshtml.HTMLWindow2Class.IHTMLWindow2_execScript(String code, String language)  at BluePrism.ApplicationManager.HTML.clsHTMLDocument.InvokeJavascriptMethod(String methodname, String jsonargs, Object& retval, String& sErr) - Failed to update data to BBC",Queue-25,Process-19,,,1/2/21 16:37
+130,Failed to perform step 1 in Navigate Stage 'Navigate1' on page 'N-Search Req' - Failed while invoking javascript method:Exception from HRESULT: 0x80020101->   at mshtml.HTMLWindow2Class.IHTMLWindow2_execScript(String code, String language)  at BluePrism.ApplicationManager.HTML.clsHTMLDocument.InvokeJavascriptMethod(String methodname, String jsonargs, Object& retval, String& sErr) - Failed to update data to BBC,Queue-25,Process-19,,,1/2/21 16:37
 131,Unable to launch Taleo application,Queue-25,Process-19,,,1/2/21 16:47
 132,Error in Input File,Queue-31,Process-6,,,1/2/21 16:57
 133,Internal:Failed to perform step 1 in Write Stage 'Clear short desc' on page 'W-ProblemTicket-Tabs' - Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED)),Queue-23,Process-17,,,1/2/21 17:07

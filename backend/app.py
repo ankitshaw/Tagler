@@ -64,7 +64,7 @@ def predict_exception_tag():
     return send_data
         #tagging nlp model
         #es rule extract
-        #if confident update predicted tag and extract heal condition else update Not Processed and skip heal
+    
 
 
 def get_feedback_rows():
@@ -170,7 +170,7 @@ def ngrok():
     # Update any base URLs or webhooks to use the public ngrok URL
     #init_webhooks(public_url)
 
-#ngrok()
+ngrok()
 #print(predict_exception_tag())
 #print(get_feedback_rows())
 #push_feedback(send_data=[{"id":106,"tag":"tp","heal":"ok"}])

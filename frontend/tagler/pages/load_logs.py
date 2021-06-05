@@ -10,7 +10,7 @@ def write():
     st.markdown('<p class="big-font">Load New Log</p>', unsafe_allow_html=True)
     uploaded_file = st.file_uploader("Choose a file")
     if uploaded_file is not None:
-        dataframe = pd.read_csv(uploaded_file)
+        dataframe = pd.read_csv(uploaded_file,header=0)
         st.write(dataframe)
         data = getData(dataframe)
         load(data)
