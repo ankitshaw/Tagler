@@ -48,3 +48,9 @@ class SqlPublisher:
         self.update = update
         print(self.update)
         #self.trainRows.append({"id":str(id)})
+    
+    def new_log(self,data):
+        for d in data:
+            if d[0]!=0:
+                self.conn.execute('insert into log_stream values('+str(d[0])+',"'+d[1]+'","'+d[2]+'","'+d[3]+'","'+d[4]+'","'+d[5]+'","'+d[6]+'")');
+    

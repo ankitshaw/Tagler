@@ -42,14 +42,14 @@ class SqlPoller:
     def reset_data(self):
         self.conn.execute("DELETE FROM log_stream")
         self.conn.execute("DELETE FROM train")
-        self.conn.execute('insert into log_stream values(101,"Invite not found in both CBS mailbox","Queue-12","Process-9","","","1/2/21 11:45")');
-        self.conn.execute('insert into log_stream values(102,"Interviewer xxxx mail ID not found in invite.","Queue-12","Process-9","","","1/2/21 11:55")');
-        self.conn.execute('insert into log_stream values(103,"Invite not found in both TAX and PAS mailbox","Queue-12","Process-9","","","1/2/21 12:05")');
-        self.conn.execute('insert into log_stream values(104,"InternalFailed to evaluate expression Replace([MailBody],$Item$,[Mail_Data.ID]) - The collection has no c","Queue-14","Process-11","","","1/2/21 12:15")');
-        self.conn.execute('insert into log_stream values(105,"Could not execute code stage because exception thrown by code stage: The given key was not present in the dictionary.","Queue-16","Process-13","","","1/2/21 12:25")');
-        self.conn.execute('insert into log_stream values(106,"Error makes no sense has please call ps support","Queue-99","Process-13","","","1/2/21 12:35")');
-        self.conn.execute('insert into log_stream values(107,"Error makes no sense has please call ps support","Queue-11","Process-11","","","1/2/21 12:45")');
-        self.conn.execute('insert into log_stream values(108,"Bot could not find the right email template from the mail box","Queue-10","Process-10","","","1/2/21 12:55")');
+        #self.conn.execute('insert into log_stream values(101,"Invite not found in both CBS mailbox","Queue-12","Process-9","","","1/2/21 11:45")');
+        #self.conn.execute('insert into log_stream values(102,"Interviewer xxxx mail ID not found in invite.","Queue-12","Process-9","","","1/2/21 11:55")');
+        #self.conn.execute('insert into log_stream values(103,"Invite not found in both TAX and PAS mailbox","Queue-12","Process-9","","","1/2/21 12:05")');
+        #self.conn.execute('insert into log_stream values(104,"InternalFailed to evaluate expression Replace([MailBody],$Item$,[Mail_Data.ID]) - The collection has no c","Queue-14","Process-11","","","1/2/21 12:15")');
+        #self.conn.execute('insert into log_stream values(105,"Could not execute code stage because exception thrown by code stage: The given key was not present in the dictionary.","Queue-16","Process-13","","","1/2/21 12:25")');
+        #self.conn.execute('insert into log_stream values(106,"Error makes no sense has please call ps support","Queue-99","Process-13","","","1/2/21 12:35")');
+        #self.conn.execute('insert into log_stream values(107,"Error makes no sense has please call ps support","Queue-11","Process-11","","","1/2/21 12:45")');
+        #self.conn.execute('insert into log_stream values(108,"Bot could not find the right email template from the mail box","Queue-10","Process-10","","","1/2/21 12:55")');
         
     def new_log(self,data):
         for d in data:

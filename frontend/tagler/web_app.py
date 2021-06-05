@@ -5,6 +5,7 @@ import pages.tagger
 import pages.insert
 import pages.feedback
 import pages.training
+import pages.load_logs
 from utils import load_css
 
 PAGES = {
@@ -13,6 +14,7 @@ PAGES = {
     "Train Feedback": pages.feedback,
     "Create New Log": pages.insert,
     "Trained Exception": pages.training,
+    "Load Logs": pages.load_logs,
 }
 
 
