@@ -16,7 +16,9 @@ PWD = "JHhtpUXnGsq30zMPYuuXgGeC"
 
 kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
 kb2 = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer-stream", search_fields="exception_input")
-#kb.load_csv("/workspaces/Tagler-Hackathon/models/kb.csv")
+kb2.delete_documents()
+kb.delete_documents()
+kb.load_csv("../models/kb.csv")
 
 nlpTagger = NLPTagClassifier("../models","cpu")
 esRetriever = KnowledgeBaseRetriever(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
@@ -55,8 +57,8 @@ def predict_exception_tag():
             prepare_result_api(send_data, exc, nlpTag, heal_action)
             perform_healing( heal_action )
         else:
-            sqlPub.prepare_update(exc[0],"Not_Processed","Not_Processed")
-            prepare_result_api(send_data, exc, "Not_Processed","Not_Processed")
+            sqlPub.prepare_update(exc[0], nlpTag,"Not_Processed")
+            prepare_result_api(send_data, exc, nlpTag,"Not_Processed")
         
     #sqlPub.clear_updates()
     sqlPub.write_result()

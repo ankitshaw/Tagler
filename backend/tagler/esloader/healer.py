@@ -32,3 +32,6 @@ class KnowledgeBaseLoader:
     def load_from_ui(self, data):
         print(data)
         self.document_store.write_documents(data)
+
+    def delete_documents(self):
+        self.document_store.delete_all_documents()
