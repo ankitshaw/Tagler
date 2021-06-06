@@ -41,6 +41,8 @@ def create_header():
 def create_body(df):
 	size = len(df[columns[0]])
 	mp = {}
+	options_tag = ['Not_Processed','System Exception', 'Business Exception']
+	options_heal = ['Not_Processed','Raise Ticket', 'Mail User', 'Restart Process']
 	for i in range(size):
 		mp[df[columns[0]][i]] = {"id":df[columns[0]][i],"tag":df[columns[4]][i],"heal":df[columns[5]][i]}
 
@@ -49,13 +51,15 @@ def create_body(df):
 		col2.write(df[columns[1]][i])
 		col3.write(df[columns[2]][i])
 		col4.write(df[columns[3]][i])
-		if df[columns[4]][i] == "Not_Processed":
-			tag = col5.selectbox('Exceptions',('Not_Processed','System Exception', 'Business Exception'), key=str(df[columns[0]][i]))#col5.text_input(label="Exception Tag", key=str(df[columns[0]][i]))
+		if df[columns[4]][i]:
+			index = options_tag.index(df[columns[4]][i])
+			tag = col5.selectbox('Exceptions',options_tag, key=str(df[columns[0]][i]), index=index)#col5.text_input(label="Exception Tag", key=str(df[columns[0]][i]))
 		else:
 			col5.write(df[columns[4]][i])
 
-		if df[columns[5]][i] == "Not_Processed":
-			heal = col6.selectbox('Heal Action',('Not_Processed','Raise Ticket', 'Mail User', 'Restart Process'),key=str(df[columns[0]][i]))#col6.text_input(label="Heal Action", key=str(df[columns[0]][i]))
+		if df[columns[5]][i]:
+			index = options_heal.index(df[columns[5]][i])
+			heal = col6.selectbox('Heal Action',options_heal, key=str(df[columns[0]][i]), index=index)#col6.text_input(label="Heal Action", key=str(df[columns[0]][i]))
 		else:
 			col6.write(df[columns[5]][i])
 		col7.write(df[columns[6]][i])
