@@ -2,7 +2,7 @@ version: '2'
 services:
   ui:
     build: ./frontend
-    command: bash -c "export API_ENDPOINT=http://9bdba458039d.ngrok.io && streamlit run web_app.py --server.port=8501 --server.enableCORS=false --server.enableXsrfProtection=false"
+    command: bash -c "export API_ENDPOINT=http://localhost:8000 && streamlit run web_app.py --server.port=8501 --server.enableCORS=false --server.enableXsrfProtection=false"
     ports:
       - '8501:8501'
     depends_on:
