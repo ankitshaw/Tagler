@@ -10,7 +10,7 @@ RUN apt-get install -y unixodbc unixodbc-dev
 RUN pip3 install -r requirements.txt
 
 
-EXPOSE 8000 8501
+EXPOSE 5000 8501
 
 COPY ./backend /backend
 COPY ./frontend /frontend
@@ -20,4 +20,4 @@ WORKDIR /backend
 
 #CMD ["cd /frontend/tagler"]
 #CMD ["streamlit", "run", "web_app.py"]
-CMD ["uvicorn", "api:app", "--host", "127.0.0.1", "--port", "8000"]
+CMD ["uvicorn", "api:app", "--port", "5000"]

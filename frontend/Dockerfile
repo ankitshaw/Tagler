@@ -4,9 +4,7 @@ WORKDIR /
 
 RUN pip install streamlit==0.72.0
 
-RUN export API_ENDPOINT=http://api:8000
-
-EXPOSE 8000 8501
+EXPOSE 5000 8501
 
 COPY ./tagler /tagler
 

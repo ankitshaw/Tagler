@@ -10,7 +10,7 @@ RUN apt-get install -y unixodbc unixodbc-dev
 RUN pip3 install -r requirements.txt
 
 
-EXPOSE 8000 8501
+EXPOSE 5000 8501
 
 COPY ./backend /backend
 COPY ./frontend /frontend

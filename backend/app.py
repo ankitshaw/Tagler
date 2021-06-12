@@ -182,7 +182,7 @@ def reset():
     kb.delete_documents()
     kb.load_csv("../models/kb.csv")
 
-ngrok()
+#ngrok()
 #print(predict_exception_tag())
 #print(get_feedback_rows())
 #push_feedback(send_data=[{"id":106,"tag":"tp","heal":"ok"}])
