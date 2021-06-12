@@ -18,6 +18,7 @@ class ServiceNow():
 class Restart():
     def __init__(self):
         import paramiko,time
+        import os
         HOST = os.getenv("WIN", "13.70.2.146")
         USER = os.getenv("WIN_USER", "tagler")
         PWD = os.getenv("WIN_PASW", "Tagler@12345")

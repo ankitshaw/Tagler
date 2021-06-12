@@ -20,4 +20,4 @@ WORKDIR /backend
 
 #CMD ["cd /frontend/tagler"]
 #CMD ["streamlit", "run", "web_app.py"]
-CMD ["uvicorn", "api:app", "--port", "5000"]
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "5000"]
