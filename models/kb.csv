@@ -46,3 +46,4 @@ id,exception_input,queue,process,exception_tag,heal_action,entry_time
 145,BBC Update failed for BBC ID- 330- The remote server returned an error: (504) Gateway Timeout.,Queue-5,Process-2,System Exception,Restarted Process,1/2/21 19:08
 146,Failed to perform step 1 in Navigate Stage 'Click On the Number' on page 'Click On Task SLA' - Cannot find region identified as an image.,Queue-63,Process-44,System Exception,Raised Ticket,1/2/21 19:18
 147,Error in populating result in output template - Unexpected error occured in running output  macro,Queue-28,Process-21,System Exception,Restarted Process,1/2/21 19:28
+148,MS Edge not working correctly,Queue-101,Process-101,System Exception,Restarted Process,1/2/21 19:28

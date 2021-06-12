@@ -3,7 +3,7 @@ import streamlit as st
 import os
 import json
 
-API_ENDPOINT = os.getenv("API_ENDPOINT", "https://ankitshaw-tagler-hackathon-cpvg-8000.githubpreview.dev")
+API_ENDPOINT = os.getenv("API_ENDPOINT", "http://api:8000")
 MODEL_ID = "1"
 DOC_REQUEST = "query"
 TAGGER = "classify-exception"
@@ -12,6 +12,7 @@ PUSH = "push-feedback"
 INSERT = "insert"
 TRAINING_ROWS = "training_rows"
 LOG_ROWS="new_log_rows"
+RESET="reset"
 
 headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
 
@@ -19,6 +20,11 @@ headers = {'Content-Type': 'application/json', 'Accept':'application/json'}
 def insert_db(data):
    url = API_ENDPOINT + "/" + INSERT
    response_raw = requests.post(url,data = json.dumps(data), headers = headers)
+   return json2Df(response_raw.json())
+
+def reset():
+   url = API_ENDPOINT + "/" + RESET
+   response_raw = requests.get(url)
    return json2Df(response_raw.json())
 
 #@st.cache(show_spinner=False) //Check 

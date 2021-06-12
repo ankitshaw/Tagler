@@ -40,8 +40,10 @@ class SqlPoller:
         self.train_query = text("SELECT * FROM " + self.trainTable)
     
     def reset_data(self):
+        print("Resetting Data...")
         self.conn.execute("DELETE FROM log_stream")
         self.conn.execute("DELETE FROM train")
+        print("Resetting Done...")
         #self.conn.execute('insert into log_stream values(101,"Invite not found in both CBS mailbox","Queue-12","Process-9","","","1/2/21 11:45")');
         #self.conn.execute('insert into log_stream values(102,"Interviewer xxxx mail ID not found in invite.","Queue-12","Process-9","","","1/2/21 11:55")');
         #self.conn.execute('insert into log_stream values(103,"Invite not found in both TAX and PAS mailbox","Queue-12","Process-9","","","1/2/21 12:05")');

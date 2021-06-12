@@ -1,5 +1,6 @@
 import logging as LOGGER
 import time
+import os
 
 from tagler.esloader.healer import KnowledgeBaseLoader
 from tagler.healer.retriever import KnowledgeBaseRetriever
@@ -7,12 +8,12 @@ from tagler.poller.sql import SqlPoller
 from tagler.publisher.sql import SqlPublisher
 from tagler.publisher.model import SQL_PUSH
 from tagler.tagger.inference import NLPTagClassifier
-from tagler.healer.actions import Email, ServiceNow
+from tagler.healer.actions import Email, ServiceNow, Restart
 
 LOGGER.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=LOGGER.DEBUG)
-HOST = "enterprise-search-deployment-fa9443.es.ap-east-1.aws.elastic-cloud.com"
-USER = "elastic" 
-PWD = "JHhtpUXnGsq30zMPYuuXgGeC"
+HOST = os.getenv("ES_ENDPOINT", "enterprise-search-deployment-1e36b1.es.uksouth.azure.elastic-cloud.com")
+USER = os.getenv("ES_USER", "elastic")
+PWD = os.getenv("ES_PASW", "xYmUWIh8Ne5oBQCY6vEUrIlI")
 
 kb = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer", search_fields="exception_input")
 kb2 = KnowledgeBaseLoader(scheme="https",host=HOST,port=9243, username=USER, password=PWD, index="tagger-healer-stream", search_fields="exception_input")
@@ -34,7 +35,7 @@ def continuous_exception_tagging():
         Performs continuous perdiction for all the data
     """
     while True:
-        tag_one_batch()
+        predict_exception_tag()
         LOGGER.debug( "Sleeping for 5 secs" )
         time.sleep(5)
 
@@ -55,7 +56,7 @@ def predict_exception_tag():
             nlpTag=esTag #confidence logic needed
             sqlPub.prepare_update(exc[0],nlpTag,heal_action)
             prepare_result_api(send_data, exc, nlpTag, heal_action)
-            perform_healing( heal_action )
+            perform_healing(exc[2],exc[3],heal_action)
         else:
             sqlPub.prepare_update(exc[0], nlpTag,"Not_Processed")
             prepare_result_api(send_data, exc, nlpTag,"Not_Processed")
@@ -109,7 +110,7 @@ def tag_one_batch():
 
         if nlpTag == esTag:
             sqlPub.prepare_update(exc[0],nlpTag,heal_action)
-            perform_healing( heal_action )
+            perform_healing( q, p,heal_action )
         else:
             sqlPub.prepare_update(exc[0],"Not Processed","Not Healed")
     
@@ -143,13 +144,15 @@ def prepare_es_load(exc):
 def insert_new_log(data):
     sqlPol.new_log(data)
 
-def perform_healing( heal_action ):
+def perform_healing( q,p,heal_action ):
     """
         Performs healing mechanism for the exception occured
     """
-    return "HEALED"
-    if heal_action == "Raise Ticket": #handle this in a Healer class
-        serviceNow.raise_ticket()
+    #return "HEALED"
+    if heal_action == "Restarted Process":
+        if  q=="Queue-101" and p=="Process-101":#handle this in a Healer class
+            Restart()
+            return "Healed"
 
 
 def query_resolution( esRetriever, exc ):
@@ -171,6 +174,13 @@ def ngrok():
 
     # Update any base URLs or webhooks to use the public ngrok URL
     #init_webhooks(public_url)
+
+def reset():
+    sqlP = SqlPoller(conn_string="sqlite:///../models/tagler_prd.db")
+    sqlP.reset_data()
+    kb2.delete_documents()
+    kb.delete_documents()
+    kb.load_csv("../models/kb.csv")
 
 ngrok()
 #print(predict_exception_tag())

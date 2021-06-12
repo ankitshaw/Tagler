@@ -6,7 +6,7 @@ import pages.insert
 import pages.feedback
 import pages.training
 import pages.load_logs
-from utils import load_css
+from utils import load_css, reset
 
 PAGES = {
     "Welcome": pages.welcome,
@@ -26,9 +26,12 @@ def main():
     st.sidebar.title("Navigation")
     selection = st.sidebar.radio("Go to", list(PAGES.keys()))
 
+    r = st.sidebar.button("Reset")
     page = PAGES[selection]
-
     page.write()
+
+    if(r):
+        reset()
 
 if __name__ == "__main__":
     main()

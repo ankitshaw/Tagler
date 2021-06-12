@@ -2,9 +2,10 @@ version: '2'
 services:
   ui:
     build: ./frontend
-    command: bash -c "export API_ENDPOINT=http://localhost:8000 && streamlit run web_app.py --server.port=8501 --server.enableCORS=false --server.enableXsrfProtection=false"
     ports:
       - '8501:8501'
+    environment:
+      - API_ENDPOINT=http://api:8000
     depends_on:
       - api
     image: taglertest/frontend-tagler
@@ -12,4 +13,11 @@ services:
     build: .
     ports:
       - '8000:8000'
+    environment:
+      - ES_ENDPOINT=https://enterprise-search-deployment-1e36b1.es.uksouth.azure.elastic-cloud.com
+      - ES_USER=elastic
+      - ES_PASW=xYmUWIh8Ne5oBQCY6vEUrIlI
+      - WIN=13.70.2.146
+      - WIN_USER=tagler
+      - WIN_PASW=Tagler@12345
     image: taglertest/backend-tagler
