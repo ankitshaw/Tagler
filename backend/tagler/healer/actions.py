@@ -37,7 +37,7 @@ class Restart():
         s = stdout.read().decode("utf-8")
         s = s[s.index("tagler")+6:s.index("Active")].strip()
         time.sleep(5)
-        stdin, stdout, stderr = ssh_client.exec_command('PsExec.exe -u '+USER+' -p '+ PWD +' -i '+s+'-d "C:/PSTools/script/msedge.bat"')
+        stdin, stdout, stderr = ssh_client.exec_command('PsExec.exe -u '+USER+' -p '+ PWD +' -i '+s+' -d "C:/PSTools/script/msedge.bat"')
         time.sleep(5)
         # print the standard out and error (if any) 
         print('stdout -- ', stdout.read())
