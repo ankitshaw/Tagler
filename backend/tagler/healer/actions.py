@@ -30,10 +30,15 @@ class Restart():
         # connect to windows server
         ssh_client.connect(hostname =HOST, username = USER, password = PWD, port = 22)
         # execute the script on windows server
-        time.sleep(10)
+        time.sleep(5)
         stdin, stdout, stderr = ssh_client.exec_command('taskkill /IM "msedge.exe" /F')
-        time.sleep(10)
-        stdin, stdout, stderr = ssh_client.exec_command('PsExec.exe -u '+USER+' -p '+ PWD +' -i 2 -d ""C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe""')
+        time.sleep(5)
+        stdin, stdout, stderr = ssh_client.exec_command('query session tagler')
+        s = stdout.read().decode("utf-8")
+        s = s[s.index("tagler")+6:s.index("Active")].strip()
+        time.sleep(5)
+        stdin, stdout, stderr = ssh_client.exec_command('PsExec.exe -u '+USER+' -p '+ PWD +' -i '+s+'-d "C:/PSTools/script/msedge.bat"')
+        time.sleep(5)
         # print the standard out and error (if any) 
         print('stdout -- ', stdout.read())
         print('stderr -- ', stderr.read())
